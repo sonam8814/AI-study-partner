@@ -8,7 +8,7 @@ def get_supabase() -> Client:
     global _client
     if _client is None:
         _client = create_client(
-            settings.supabase_url,
-            settings.supabase_service_role_key,
+            settings.SUPABASE_URL,
+            settings.SUPABASE_SERVICE_ROLE_KEY,
         )
     return _client
