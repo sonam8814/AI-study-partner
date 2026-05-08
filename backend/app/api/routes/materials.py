@@ -9,6 +9,7 @@ from loguru import logger
 from app.api.deps import get_current_user_id
 from app.db.client import get_supabase
 from app.db.schemas import Material, MaterialCreate, MaterialListResponse, MaterialUpdate
+from app.utils.indexer import index_material
 
 router = APIRouter(prefix="/materials", tags=["materials"])
 
@@ -40,8 +41,7 @@ def _row_to_material(row: dict) -> Material:
 # ── Background: chunk + embed ──────────────────────────────────────────────────
 
 def _index_material(material_id: str, user_id: str) -> None:
-    """Stub — replaced in Step 5 when chunker + embeddings are wired up."""
-    logger.info(f"[index] material {material_id} queued (stub — implemented in Step 5)")
+    index_material(material_id, user_id)
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────────

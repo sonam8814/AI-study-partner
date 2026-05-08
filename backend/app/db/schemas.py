@@ -69,6 +69,35 @@ class ChatMessage(BaseModel):
     mode: Mode
 
 
+class StudySession(BaseModel):
+    id: UUID
+    user_id: UUID
+    material_id: UUID | None
+    mode: Mode
+    messages: list[dict]
+    started_at: datetime
+    last_active_at: datetime
+
+
+# ── Feynman ────────────────────────────────────────────────────────────────────
+
+class FeynmanPromptRequest(BaseModel):
+    material_id: UUID
+    session_id: UUID | None = None
+
+
+class FeynmanPromptResponse(BaseModel):
+    concept: str
+    prompt: str
+    session_id: UUID
+
+
+class FeynmanCritiqueRequest(BaseModel):
+    session_id: UUID
+    concept: str
+    user_explanation: str = Field(min_length=1, max_length=8000)
+
+
 # ── Weak Spots ─────────────────────────────────────────────────────────────────
 
 class WeakSpot(BaseModel):
@@ -84,6 +113,21 @@ class WeakSpot(BaseModel):
     created_at: datetime
 
 
+class WeakSpotCreate(BaseModel):
+    material_id: UUID | None = None
+    topic: str = Field(min_length=1, max_length=200)
+    description: str | None = None
+
+
+class WeakSpotUpdate(BaseModel):
+    resolved: bool
+
+
+class WeakSpotListResponse(BaseModel):
+    items: list[WeakSpot]
+    total: int
+
+
 # ── Garden ─────────────────────────────────────────────────────────────────────
 
 class GardenStats(BaseModel):
@@ -97,6 +141,18 @@ class GardenStats(BaseModel):
     plants_grown_total: int
     garden_layout: list[dict]
     updated_at: datetime
+
+
+class GardenRecordRequest(BaseModel):
+    minutes_studied: int = Field(default=0, ge=0)
+
+
+class GardenRecordResponse(BaseModel):
+    current_streak: int
+    longest_streak: int
+    current_plant_stage: int
+    is_new_day: bool
+    plant_just_grew: bool
 
 
 # ── Errors ─────────────────────────────────────────────────────────────────────

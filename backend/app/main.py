@@ -65,7 +65,7 @@ app = FastAPI(
 # ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins_list,   # ← uses the property correctly
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,18 +75,17 @@ app.add_middleware(
 # ── Routers ───────────────────────────────────────────────────────────────────
 from app.api.routes.health import router as health_router
 from app.api.routes.materials import router as materials_router
+from app.api.routes.chat import router as chat_router
+from app.api.routes.feynman import router as feynman_router
+from app.api.routes.garden import router as garden_router
+from app.api.routes.weakspots import router as weakspots_router
+
 app.include_router(health_router, prefix="/api/v1")
 app.include_router(materials_router, prefix="/api/v1")
-
-# Uncomment these as you build each module:
-# from app.api.routes.chat       import router as chat_router
-# from app.api.routes.feynman    import router as feynman_router
-# from app.api.routes.garden     import router as garden_router
-# from app.api.routes.weakspots  import router as weakspots_router
-# app.include_router(chat_router,      prefix="/api/v1")
-# app.include_router(feynman_router,   prefix="/api/v1")
-# app.include_router(garden_router,    prefix="/api/v1")
-# app.include_router(weakspots_router, prefix="/api/v1")
+app.include_router(chat_router, prefix="/api/v1")
+app.include_router(feynman_router, prefix="/api/v1")
+app.include_router(garden_router, prefix="/api/v1")
+app.include_router(weakspots_router, prefix="/api/v1")
 
 
 # ── Global error handler ──────────────────────────────────────────────────────
