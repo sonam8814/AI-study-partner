@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Literata:ital,wght@0,400;0,600;1,400;1,600&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#f7bd48",
+                    "secondary-container": "#fdc34d",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#414845",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fcf9f8",
+                    "secondary-fixed": "#ffdea6",
+                    "surface-tint": "#3c6658",
+                    "on-primary-fixed": "#002118",
+                    "outline-variant": "#c0c8c3",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#1f4a3d",
+                    "on-secondary-container": "#715000",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#313030",
+                    "on-primary-fixed-variant": "#244e41",
+                    "tertiary": "#2e2d29",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "primary": "#033327",
+                    "primary-fixed": "#beecda",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary-fixed-dim": "#c9c6c0",
+                    "on-tertiary-fixed-variant": "#484742",
+                    "primary-fixed-dim": "#a3d0bf",
+                    "surface-container": "#f0eded",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e5e2e1",
+                    "surface-container-high": "#eae7e7",
+                    "tertiary-container": "#44433e",
+                    "on-secondary-fixed": "#271900",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "background": "#fcf9f8",
+                    "on-background": "#1c1b1b",
+                    "inverse-primary": "#a3d0bf",
+                    "surface-dim": "#dcd9d9",
+                    "outline": "#717975",
+                    "tertiary-fixed": "#e6e2db",
+                    "on-surface": "#1c1b1b",
+                    "on-tertiary-container": "#b2b0a9",
+                    "secondary": "#7b5800",
+                    "surface-container-low": "#f6f3f2",
+                    "on-primary-container": "#8cb9a8",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "aged-paper": "#D4C9A8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "max-width-content": "800px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Literata"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-md": ["Literata"],
+                    "display-lg": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "label-sm": ["Literata"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "code-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .gilt-citation {
+            color: #7b5800;
+            font-size: 0.75em;
+            vertical-align: super;
+            font-weight: 700;
+        }
+        .waveform-bar {
+            width: 3px;
+            background-color: #033327;
+            margin: 0 1px;
+            border-radius: 2px;
+        }
+        .parchment-texture {
+            background-color: #fcf9f8;
+            background-image: radial-gradient(#dcd9d9 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+        .active-mode-italic {
+            font-family: 'Literata', serif;
+            font-style: italic;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-secondary-fixed">
+<!-- Top AppBar - Focus Mode -->
+<header class="sticky top-0 z-50 bg-surface border-b border-outline-variant h-16 flex items-center px-4 md:px-margin-desktop justify-between">
+<div class="flex items-center gap-4">
+<a class="flex items-center gap-2 text-primary font-semibold hover:opacity-80 transition-opacity" href="/library">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-label-sm text-label-sm">Library</span>
+</a>
+<div class="hidden md:h-6 md:w-px md:bg-outline-variant md:mx-2"></div>
+<div class="hidden md:flex bg-surface-container-low border border-aged-paper rounded-full p-1 gap-1">
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors">Peer</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors">Tutor</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors text-on-primary active-mode-italic bg-primary">Feynman</button>
+<button class="px-4 py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors">Examiner</button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden sm:flex items-center gap-2 bg-primary px-3 py-1.5 rounded-full text-surface-container-lowest animate-pulse">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span class="font-label-sm text-[11px] uppercase tracking-widest">Always Listening</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-aged-paper overflow-hidden">
+<img alt="User Scholar Avatar" data-alt="A refined profile portrait of a modern scholar, depicted as a minimalist line-art icon with a high-contrast aesthetic. The scholar wears circular spectacles and a tweed jacket, set against a warm parchment background. The lighting is soft and academic, evoking the quiet atmosphere of a physical library archive. The color palette uses deep forest green and ivory tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU-H7_BSsny9R4lVnztctnzvWxvY3qX2mzao9T1n3mDhC9fEgQytchbwQS1iqRYIVVEn-IKLwgFh0bl0samQeYqzcqBzPH4K0bAn9IJO87Pix-9HV75Bc0W9XO4BJspExHZzMb2cEfRcEg8qEsfLYJ6aNr8V589fhAtkf4gXIBS8F0QRvUWhB09EmGm55IHFtv7FMdndfhyEJIl_jefP3P55u6l2h3meEACCFvFloOuEiZQobyWXNcR6j6vjWYzVYHgPu-4QQp55Y"/>
+</div>
+</div>
+</header>
+<!-- Mobile Tab Switcher -->
+<nav class="md:hidden flex border-b border-outline-variant bg-surface sticky top-16 z-40">
+<button class="flex-1 py-3 font-label-sm text-label-sm border-b-2 border-primary text-primary">Chat</button>
+<button class="flex-1 py-3 font-label-sm text-label-sm text-on-surface-variant">Notes</button>
+</nav>
+<main class="max-w-[1200px] mx-auto flex h-[calc(100vh-64px)] md:h-[calc(100vh-64px)] overflow-hidden">
+<!-- Left Column: Chat Interface (Parchment) -->
+<section class="flex-1 flex flex-col parchment-texture border-r border-outline-variant relative">
+<div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 scroll-smooth">
+<!-- Feynman Context Card -->
+<div class="max-w-content mx-auto w-full">
+<div class="bg-surface-container-low border border-secondary p-6 rounded-lg flex items-start gap-4 mb-10">
+<div class="bg-secondary-fixed p-3 rounded-full">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-1">The Feynman Technique</h2>
+<p class="font-body-md text-body-md text-on-surface-variant italic">Teaching "The Diffusion of Innovation" as if to a child.</p>
+</div>
+</div>
+<!-- Message Thread -->
+<div class="space-y-10">
+<!-- AI Message -->
+<div class="flex flex-col gap-2">
+<div class="pl-6 border-l-2 border-primary">
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                                    Imagine a small village where someone discovers a new type of grain that grows twice as fast. Some people try it immediately—we call them <span class="bg-secondary-fixed/30 border-b border-secondary">Innovators</span>. Others wait to see if the village elders approve<span class="gilt-citation">[1]</span>. 
+                                </p>
+<p class="font-body-lg text-body-lg text-on-surface mt-4 leading-relaxed">
+                                    How would you explain why the "Wait-and-See" group takes so long to change their ways?
+                                </p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[80%] bg-primary text-surface-container-lowest px-6 py-4 rounded-xl rounded-tr-none shadow-sm">
+<p class="font-body-md text-body-md">
+                                    I think it's because they are afraid of the risk. If the grain fails, they won't have food for the winter. They need to see social proof from their neighbors first.
+                                </p>
+</div>
+</div>
+<!-- AI Message -->
+<div class="flex flex-col gap-2">
+<div class="pl-6 border-l-2 border-primary">
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                                    Spot on. That risk-aversion creates a "chasm" in the adoption curve<span class="gilt-citation">[2]</span>. You're describing the <span class="italic">Early Majority</span> perfectly. 
+                                </p>
+<div class="mt-6 flex items-center gap-4 p-4 border border-aged-paper rounded-lg bg-surface-bright">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+<p class="font-label-sm text-label-sm text-secondary">CONCEPT UNLOCKED: Social Proof Dynamics</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 md:p-6 bg-surface-container-low border-t border-aged-paper">
+<div class="max-w-content mx-auto relative">
+<div class="flex items-end gap-4 bg-surface border border-outline rounded-xl p-3 focus-within:border-secondary transition-colors">
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md pt-2" placeholder="Explain your thinking..." rows="1"></textarea>
+<div class="flex items-center h-10 gap-2 px-2 border-l border-outline-variant ml-2">
+<!-- Voice Waveform Widget -->
+<div class="flex items-end h-6 w-12 pb-1">
+<div class="waveform-bar h-2"></div>
+<div class="waveform-bar h-4"></div>
+<div class="waveform-bar h-6"></div>
+<div class="waveform-bar h-3"></div>
+<div class="waveform-bar h-5"></div>
+</div>
+<button class="bg-primary text-surface rounded-full p-2 flex items-center justify-center hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Document/Notes (Focus Pane) -->
+<aside class="hidden md:block w-[400px] bg-surface-container-lowest border-l border-outline-variant overflow-y-auto">
+<div class="p-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline-md text-headline-md text-primary">Live Notes</h3>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+</div>
+<article class="prose prose-forest max-w-none">
+<div class="space-y-6">
+<section>
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-secondary mb-3">Core Framework</h4>
+<div class="font-body-md text-body-md space-y-4 text-on-surface">
+<p>Diffusion of Innovation (Everett Rogers) explores how ideas spread. The five stages of adoption are:</p>
+<ul class="space-y-3 pl-4 border-l border-aged-paper">
+<li><strong class="text-primary">1. Knowledge:</strong> Exposure to the innovation.</li>
+<li><strong class="text-primary">2. Persuasion:</strong> Forming a favorable attitude.</li>
+<li class="bg-secondary-fixed/40 p-2 -mx-2 rounded">
+<strong class="text-primary">3. Decision:</strong> <span class="italic underline decoration-secondary decoration-2">Crucial junction.</span> High risk-aversion leads to stagnation here.
+                                    </li>
+<li><strong class="text-primary">4. Implementation:</strong> Putting it to use.</li>
+<li><strong class="text-primary">5. Confirmation:</strong> Final reinforcement.</li>
+</ul>
+</div>
+</section>
+<section class="pt-8 mt-8 border-t border-outline-variant">
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-secondary mb-3">Key Citations</h4>
+<div class="space-y-4">
+<div class="p-4 bg-surface-container-low border border-aged-paper rounded">
+<p class="font-body-md italic text-on-surface-variant">"[1] Rogers, E. M. (2003). Diffusion of innovations. Free Press."</p>
+</div>
+<div class="p-4 bg-surface-container-low border border-aged-paper rounded">
+<p class="font-body-md italic text-on-surface-variant">"[2] Moore, G. A. (1991). Crossing the Chasm."</p>
+</div>
+</div>
+</section>
+<div class="mt-12">
+<img alt="Innovation Diffusion Graph" data-alt="A sophisticated, scholarly diagram illustrating the Diffusion of Innovation bell curve and S-curve on aged parchment paper. The illustration is rendered in a hand-drawn forest green ink style with delicate labels for 'Innovators', 'Early Adopters', and 'Laggards'. Gilt gold accents highlight the critical chasm point. The visual style is that of a vintage 19th-century scientific manuscript, clean yet textured, emphasizing clarity and intellectual focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFYu0G7fjQ-_pBEKztHh02UhJ1eghdd5qn9zdJo37Z0Cy_AnVjg3lYG7RRdc6joNwkuxSw2CpdYQh6BbjLk3N7LAQtS3vyvUgtoBWaHT9PQWCGpHAaNddSczLqhiqOVoGdEHzTSGotBzGLDvkYTzAxDFHXHdjlygzwjyODLk6iMyPyiMe87gHWhnfYRbJElnLpjfeg_PyBmFGNAUOQsgL0pjGLMOxjMjKs_zEONzHj-8PcOX-1CxnrcXNELATlA_xwftN6qRTD8A"/>
+</div>
+</div>
+</article>
+</div>
+</aside>
+</main>
+<!-- Quick Tooltip FAB (Only for specific study actions) -->
+<button class="fixed bottom-24 right-6 md:bottom-10 md:right-10 bg-secondary text-surface w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform z-50">
+<span class="material-symbols-outlined text-[32px]">menu_book</span>
+</button>
+</body></html>

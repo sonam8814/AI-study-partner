@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,600;0,700;1,400&amp;family=Playfair+Display:wght@600;700&amp;family=JetBrains+Mono&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#f7bd48",
+                    "secondary-container": "#fdc34d",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#414845",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fcf9f8",
+                    "secondary-fixed": "#ffdea6",
+                    "surface-tint": "#3c6658",
+                    "on-primary-fixed": "#002118",
+                    "outline-variant": "#c0c8c3",
+                    "surface-container-highest": "#e5e2e1",
+                    "primary-container": "#1f4a3d",
+                    "on-secondary-container": "#715000",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#313030",
+                    "on-primary-fixed-variant": "#244e41",
+                    "tertiary": "#2e2d29",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "primary": "#033327",
+                    "primary-fixed": "#beecda",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary-fixed-dim": "#c9c6c0",
+                    "on-tertiary-fixed-variant": "#484742",
+                    "primary-fixed-dim": "#a3d0bf",
+                    "surface-container": "#f0eded",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#e5e2e1",
+                    "surface-container-high": "#eae7e7",
+                    "tertiary-container": "#44433e",
+                    "on-secondary-fixed": "#271900",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "background": "#fcf9f8",
+                    "on-background": "#1c1b1b",
+                    "inverse-primary": "#a3d0bf",
+                    "surface-dim": "#dcd9d9",
+                    "outline": "#717975",
+                    "tertiary-fixed": "#e6e2db",
+                    "on-surface": "#1c1b1b",
+                    "on-tertiary-container": "#b2b0a9",
+                    "secondary": "#7b5800",
+                    "surface-container-low": "#f6f3f2",
+                    "on-primary-container": "#8cb9a8",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "aged-paper": "#D4C9A8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "max-width-content": "800px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Literata"],
+                    "code-sm": ["JetBrains Mono"],
+                    "body-md": ["Literata"],
+                    "display-lg": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "headline-md": ["Playfair Display"],
+                    "label-sm": ["Literata"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "code-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-sm": ["13px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fcf9f8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .sapling-svg {
+            width: 100px;
+            height: 120px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline fixed top-0 full-width z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 w-full max-w-content mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim cursor-pointer" data-icon="menu">menu</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">The Library</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline">
+<img alt="User Scholar Avatar" data-alt="A small, elegant circular profile avatar of a scholar wearing vintage spectacles and a subtle forest green academic robe, set against a warm parchment-colored studio background. The lighting is soft and focused, maintaining a professional and intellectual light-mode aesthetic consistent with a high-end academic design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIF8noi0SeXJowRUywS6izPo56ECwjL5u_hikCqUFPoJPHcDVDP6tqLS0ipq8o5f5txrMi64LvG85rjR7RpsW1m_c-SOkISxUCXtT7at9Y72PsmpOSdr8uOGdhLkHNQYT9qStU8Ml9hsPu9-r17-ddducxbLSiFRgNVW6sX4l1gt0UMBkuiEQFv7G5WZTN_EheG3VFAKo3ef8tWfxtcn0oxJ3CU-vdsUvS4BlxUaY5BDy7417_XCCJ-ctcn575DIL1YMdIgdYSJq8"/>
+</div>
+</header>
+<!-- NavigationDrawer (Desktop Only) -->
+<aside class="hidden md:flex flex-col py-8 h-screen w-64 docked left-0 fixed bg-surface-container-low dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline z-40">
+<div class="font-headline-md text-headline-md text-primary mb-8 px-8">The Library</div>
+<nav class="flex flex-col">
+<a class="border-l-4 border-secondary text-primary dark:text-primary-fixed bg-surface-container-high font-bold px-8 py-3 flex items-center gap-4 transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant px-8 py-3 flex items-center gap-4 hover:bg-surface-container dark:hover:bg-surface-container-high transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="font-body-md">My Library</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant px-8 py-3 flex items-center gap-4 hover:bg-surface-container dark:hover:bg-surface-container-high transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="local_florist">local_florist</span>
+<span class="font-body-md">The Garden</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant px-8 py-3 flex items-center gap-4 hover:bg-surface-container dark:hover:bg-surface-container-high transition-all duration-150 ease-out" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_late">assignment_late</span>
+<span class="font-body-md">Weak Spots</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant px-8 py-3 flex items-center gap-4 hover:bg-surface-container dark:hover:bg-surface-container-high transition-all duration-150 ease-out mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="pt-20 pb-24 px-margin-mobile md:pl-72 md:pr-margin-desktop max-w-content mx-auto min-h-screen">
+<!-- Header Section -->
+<section class="mb-8">
+<h2 class="font-headline-lg text-[28px] text-primary leading-tight">Good morning, Aanya</h2>
+<p class="font-body-md text-on-surface-variant italic">Monday, October 14th, 2024</p>
+</section>
+<!-- Stats Row (Horizontal Scroll) -->
+<section class="mb-10 overflow-x-auto hide-scrollbar -mx-margin-mobile px-margin-mobile">
+<div class="flex space-x-4 min-w-max pb-2">
+<!-- Day Streak -->
+<div class="bg-surface-container-low border border-aged-paper rounded-lg p-4 w-40 flex flex-col justify-between">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Day Streak</span>
+<div class="flex items-end gap-1 mt-4">
+<span class="font-display-lg text-[32px] text-primary">6</span>
+<span class="mb-1">🔥</span>
+</div>
+</div>
+<!-- Study Minutes -->
+<div class="bg-surface-container-low border border-aged-paper rounded-lg p-4 w-40 flex flex-col justify-between">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Minutes Today</span>
+<div class="mt-4">
+<span class="font-display-lg text-[32px] text-primary">142</span>
+<span class="font-label-sm text-on-surface-variant ml-1">min</span>
+</div>
+</div>
+<!-- Weak Spots Count -->
+<div class="bg-surface-container-low border border-aged-paper rounded-lg p-4 w-40 flex flex-col justify-between">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Weak Spots</span>
+<div class="mt-4 flex items-center gap-2">
+<span class="font-display-lg text-[32px] text-error">12</span>
+<span class="material-symbols-outlined text-error text-[20px]" data-icon="warning">warning</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Digital Garden Widget -->
+<section class="mb-10 bg-[#F5EFE0] border border-[#D4C9A8] rounded-[8px] p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-['Playfair_Display'] text-[18px] text-[#1A1A1A] font-semibold">Your Library Shelf</h3>
+<span class="font-['Playfair_Display'] font-bold text-[22px] text-[#1F4A3D]">🔥 Day 9</span>
+</div>
+<!-- The Shelf Visual -->
+<div class="relative w-full h-40 flex items-end justify-center px-2 mb-6">
+<svg class="w-full h-full" viewbox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+<!-- Shelf Gradient Definition -->
+<defs>
+<lineargradient id="shelfGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#8B6340;stop-opacity:1"></stop>
+<stop offset="30%" style="stop-color:#A0744E;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#5C3D1E;stop-opacity:1"></stop>
+</lineargradient>
+<filter height="200%" id="glow" width="200%" x="-50%" y="-50%">
+<fegaussianblur result="blur" stddeviation="2"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- Oak Plank -->
+<rect fill="url(#shelfGradient)" height="15" rx="2" width="400" x="0" y="100"></rect>
+<!-- Bookends -->
+<path d="M20 100 L20 60 L15 60" fill="none" stroke="#7A7A7A" stroke-width="3"></path>
+<path d="M380 100 L380 60 L385 60" fill="none" stroke="#7A7A7A" stroke-width="3"></path>
+<!-- Books (21 slots: approx 16px wide each) -->
+<!-- Books 1-3: Moss/Gilt with Roman Numerals -->
+<g transform="translate(25, 20)">
+<rect fill="#3c6658" height="80" rx="1" width="15"></rect>
+<text fill="#D4C9A8" font-family="serif" font-size="8" text-anchor="middle" transform="rotate(90, 7.5, 40)" x="7.5" y="40">I</text>
+</g>
+<g transform="translate(42, 15)">
+<rect fill="#244e41" height="85" rx="1" width="15"></rect>
+<text fill="#D4C9A8" font-family="serif" font-size="8" text-anchor="middle" transform="rotate(90, 7.5, 42.5)" x="7.5" y="42.5">II</text>
+</g>
+<g transform="translate(59, 25)">
+<rect fill="#3c6658" height="75" rx="1" width="15"></rect>
+<text fill="#D4C9A8" font-family="serif" font-size="8" text-anchor="middle" transform="rotate(90, 7.5, 37.5)" x="7.5" y="37.5">III</text>
+</g>
+<!-- Books 4-7: Patterned Spines -->
+<g transform="translate(76, 20)">
+<rect fill="#44433e" height="80" rx="1" width="15"></rect>
+<line stroke="#c9c6c0" stroke-width="1" x1="2" x2="13" y1="5" y2="5"></line>
+<circle cx="7.5" cy="40" fill="#c9c6c0" r="1.5"></circle>
+<line stroke="#c9c6c0" stroke-width="1" x1="2" x2="13" y1="75" y2="75"></line>
+</g>
+<g transform="translate(93, 10)">
+<rect fill="#2e2d29" height="90" rx="1" width="15"></rect>
+<line stroke="#e6e2db" stroke-width="1" x1="2" x2="13" y1="5" y2="5"></line>
+<circle cx="7.5" cy="45" fill="#e6e2db" r="1.5"></circle>
+<line stroke="#e6e2db" stroke-width="1" x1="2" x2="13" y1="85" y2="85"></line>
+</g>
+<g transform="translate(110, 15)">
+<rect fill="#44433e" height="85" rx="1" width="15"></rect>
+<line stroke="#c9c6c0" stroke-width="1" x1="2" x2="13" y1="5" y2="5"></line>
+<circle cx="7.5" cy="42.5" fill="#c9c6c0" r="1.5"></circle>
+<line stroke="#c9c6c0" stroke-width="1" x1="2" x2="13" y1="80" y2="80"></line>
+</g>
+<g transform="translate(127, 20)">
+<rect fill="#2e2d29" height="80" rx="1" width="15"></rect>
+<line stroke="#e6e2db" stroke-width="1" x1="2" x2="13" y1="5" y2="5"></line>
+<circle cx="7.5" cy="40" fill="#e6e2db" r="1.5"></circle>
+<line stroke="#e6e2db" stroke-width="1" x1="2" x2="13" y1="75" y2="75"></line>
+</g>
+<!-- Books 8-9: Gilt Label -->
+<g transform="translate(144, 18)">
+<rect fill="#1f4a3d" height="82" rx="1" width="15"></rect>
+<rect fill="#B8860B" height="12" rx="0.5" width="9" x="3" y="10"></rect>
+<text fill="#1f4a3d" font-size="8" font-weight="bold" text-anchor="middle" x="7.5" y="19">P</text>
+</g>
+<!-- Active Book 9 with Glow -->
+<g style="filter: drop-shadow(0 0 4px rgba(184,134,11,0.6));" transform="translate(161, 12)">
+<rect fill="#033327" height="88" rx="1" width="15"></rect>
+<rect fill="#B8860B" height="12" rx="0.5" width="9" x="3" y="10"></rect>
+<text fill="#033327" font-size="8" font-weight="bold" text-anchor="middle" x="7.5" y="19">Q</text>
+</g>
+<!-- Ghost Books 10-21 -->
+<g transform="translate(178, 20)">
+<rect fill="none" height="80" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(195, 15)">
+<rect fill="none" height="85" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(212, 25)">
+<rect fill="none" height="75" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(229, 10)">
+<rect fill="none" height="90" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(246, 20)">
+<rect fill="none" height="80" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(263, 15)">
+<rect fill="none" height="85" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(280, 20)">
+<rect fill="none" height="80" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(297, 10)">
+<rect fill="none" height="90" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(314, 25)">
+<rect fill="none" height="75" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(331, 15)">
+<rect fill="none" height="85" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(348, 20)">
+<rect fill="none" height="80" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+<g transform="translate(365, 10)">
+<rect fill="none" height="90" rx="1" stroke="#D4C9A8" stroke-dasharray="4,2" stroke-width="1" width="15"></rect>
+</g>
+</svg>
+</div>
+<!-- Bottom Section -->
+<div class="border-t border-[#D4C9A8] pt-4">
+<div class="flex justify-between items-end">
+<div class="flex gap-8">
+<div>
+<p class="font-['Literata'] text-[12px] text-on-surface-variant mb-1">Longest streak</p>
+<p class="font-['Playfair_Display'] text-[16px] text-[#1F4A3D] font-bold">14 days</p>
+</div>
+<div>
+<p class="font-['Literata'] text-[12px] text-on-surface-variant mb-1">Books collected</p>
+<p class="font-['Playfair_Display'] text-[16px] text-[#1F4A3D] font-bold">9</p>
+</div>
+</div>
+<a class="font-['Literata'] text-[13px] text-[#B8860B] font-bold flex items-center gap-1 hover:underline" href="#">
+                View full shelf <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Vertical Column: Weak Spots & Recent -->
+<section class="space-y-6">
+<!-- Weak Spots Card -->
+<div class="bg-surface-container-low border border-aged-paper rounded-xl p-4">
+<div class="flex justify-between items-center mb-4">
+<h4 class="font-headline-md text-primary">Focus Required</h4>
+<span class="font-label-sm text-error bg-error-container px-2 py-1 rounded">12 Issues</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between border-b border-aged-paper pb-2">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-md">Thermodynamic Cycles</span>
+</div>
+<a class="text-primary font-bold font-label-sm hover:underline" href="#">Practice →</a>
+</div>
+<div class="flex items-center justify-between border-b border-aged-paper pb-2">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-md">Quantum Decoherence</span>
+</div>
+<a class="text-primary font-bold font-label-sm hover:underline" href="#">Practice →</a>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="font-body-md">Stochastic Calculus</span>
+</div>
+<a class="text-primary font-bold font-label-sm hover:underline" href="#">Practice →</a>
+</div>
+</div>
+</div>
+<!-- Recent Materials Card -->
+<div class="bg-surface-container-low border border-aged-paper rounded-xl p-4">
+<h4 class="font-headline-md text-primary mb-4">Resume Reading</h4>
+<div class="space-y-4">
+<div class="flex gap-4 items-center">
+<div class="w-12 h-16 bg-surface-container-highest border border-aged-paper flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<p class="font-body-md font-bold text-on-surface">The Physics of Immortality</p>
+<p class="font-label-sm text-on-surface-variant">Tipler • 82% complete</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<div class="w-12 h-16 bg-surface-container-highest border border-aged-paper flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="menu_book">menu_book</span>
+</div>
+<div>
+<p class="font-body-md font-bold text-on-surface">Oxford History of Britain</p>
+<p class="font-label-sm text-on-surface-variant">Morgan • 14% complete</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden flex justify-around items-center w-full h-16 px-4 bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline fixed bottom-0 full-width z-50">
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed bg-secondary-fixed dark:bg-secondary-fixed-dim rounded-full px-4 py-1 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-sm text-label-sm">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="park">park</span>
+<span class="font-label-sm text-label-sm">Garden</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="error">error</span>
+<span class="font-label-sm text-label-sm">Weak Spots</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant p-2 hover:text-primary dark:hover:text-primary-fixed scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+</body></html>
