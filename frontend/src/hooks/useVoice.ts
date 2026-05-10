@@ -33,7 +33,8 @@ export function useVoice(): UseVoiceReturn {
   const [interimTranscript, setInterimTranscript] = useState('')
   const [error, setError] = useState<string | null>(null)
 
-  const recognitionRef = useRef<SpeechRecognition | null>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null)
   const isSupported = !!SR && typeof window !== 'undefined' && !!window.speechSynthesis
 
   const stopListening = useCallback(() => {
@@ -48,13 +49,15 @@ export function useVoice(): UseVoiceReturn {
     }
     if (isListening) return
 
-    const recognition = new (SR as new () => SpeechRecognition)()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const recognition = new (SR as new () => any)()
     recognition.continuous = true
     recognition.interimResults = true
     recognition.lang = 'en-US'
     recognition.maxAlternatives = 1
 
-    recognition.onresult = (ev) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onresult = (ev: any) => {
       let interim = ''
       let final = ''
       for (let i = ev.resultIndex; i < ev.results.length; i++) {
@@ -66,7 +69,8 @@ export function useVoice(): UseVoiceReturn {
       setInterimTranscript(interim)
     }
 
-    recognition.onerror = (ev) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onerror = (ev: any) => {
       setError(ev.error)
       setListening(false)
     }

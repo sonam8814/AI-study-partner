@@ -17,7 +17,7 @@ export default function Badge({ children, variant = 'default', className }: Badg
           'bg-error text-on-error': variant === 'error',
           'bg-primary-fixed text-primary': variant === 'success',
           'bg-secondary-fixed text-on-secondary-fixed': variant === 'warn',
-          'bg-secondary-fixed text-on-secondary-fixed': variant === 'gold',
+          'bg-gilt-gold/20 text-gilt-gold': variant === 'gold',
         },
         className
       )}
