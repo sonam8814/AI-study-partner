@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useVoice } from '@/hooks/useVoice'
 import { cn } from '@/lib/utils'
 
@@ -7,11 +8,16 @@ interface VoiceToggleProps {
 }
 
 export default function VoiceToggle({ onTranscript }: VoiceToggleProps) {
-  const { isListening, startListening, stopListening, transcript, resetTranscript, isSupported, error } =
+  const [mounted, setMounted] = useState(false)
+  const { isListening, startListening, stopListening, transcript, resetTranscript, isSupported } =
     useVoice()
 
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   function handleToggle() {
-    if (!isSupported) return
+    if (!mounted || !isSupported) return
     if (isListening) {
       stopListening()
       if (transcript && onTranscript) {
@@ -24,35 +30,38 @@ export default function VoiceToggle({ onTranscript }: VoiceToggleProps) {
     }
   }
 
-  if (!isSupported) {
-    return (
-      <button
-        disabled
-        className="p-2 text-outline cursor-not-allowed"
-        title="Voice not supported in this browser"
-        aria-label="Voice not supported"
-      >
-        <span className="material-symbols-outlined text-[20px]">mic_off</span>
-      </button>
-    )
-  }
+  const active = mounted && isSupported
+  const icon = !active ? 'mic_off' : isListening ? 'mic' : 'mic_none'
 
   return (
     <button
       onClick={handleToggle}
-      aria-pressed={isListening}
-      title={isListening ? 'Stop listening' : 'Start voice input'}
-      aria-label={isListening ? 'Stop listening' : 'Start voice input'}
+      disabled={!active}
+      aria-pressed={active ? isListening : undefined}
+      title={
+        !active
+          ? 'Voice not supported in this browser'
+          : isListening
+          ? 'Stop listening'
+          : 'Start voice input'
+      }
+      aria-label={
+        !active
+          ? 'Voice not supported'
+          : isListening
+          ? 'Stop listening'
+          : 'Start voice input'
+      }
       className={cn(
         'p-2 rounded-full transition-all',
-        isListening
+        !active
+          ? 'text-outline cursor-not-allowed'
+          : isListening
           ? 'bg-error text-on-error animate-pulse'
           : 'text-on-surface-variant hover:text-primary hover:bg-surface-container'
       )}
     >
-      <span className="material-symbols-outlined text-[20px]">
-        {isListening ? 'mic' : 'mic_none'}
-      </span>
+      <span className="material-symbols-outlined text-[20px]">{icon}</span>
     </button>
   )
 }

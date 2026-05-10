@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { useStudyStore } from '@/stores/studyStore'
 import { useStreamingChat } from '@/hooks/useStreamingChat'
 import { useStudySession } from '@/hooks/useStudySession'
+import { useVoice } from '@/hooks/useVoice'
 import ModeSwitcher from './ModeSwitcher'
 import ChatMessage from './ChatMessage'
 import StreamingMessage from './StreamingMessage'
@@ -17,15 +18,111 @@ interface ChatPanelProps {
 
 export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps) {
   const [inputText, setInputText] = useState('')
-  const [alwaysListening, setAlwaysListening] = useState(false)
   const { messages, isStreaming, streamingContent } = useStudyStore()
   const { sendMessage } = useStreamingChat(materialId)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  const {
+    alwaysOn,
+    setAlwaysOn,
+    isListening,
+    transcript,
+    interimTranscript,
+    startListening,
+    stopListening,
+    resetTranscript,
+    isSpeaking,
+    speak,
+    cancelSpeech,
+    isSupported,
+  } = useVoice()
+
   // Record study session
   useStudySession(materialId)
 
+  // --- Always-listening: silence detection + auto-submit ---
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastInterimRef = useRef('')
+
+  // Track interim transcript changes for silence detection
+  useEffect(() => {
+    if (!alwaysOn || !isListening || isStreaming || isSpeaking) return
+
+    // If interim changed, reset the silence timer
+    if (interimTranscript !== lastInterimRef.current) {
+      lastInterimRef.current = interimTranscript
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current)
+
+      // Only set silence timer if there's accumulated content
+      if (transcript || interimTranscript) {
+        silenceTimerRef.current = setTimeout(() => {
+          // 1500ms of silence — auto-submit the final transcript
+          const text = transcript.trim()
+          if (text) {
+            stopListening()
+            resetTranscript()
+            sendMessage(text)
+          }
+        }, 1500)
+      }
+    }
+
+    return () => {
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current)
+    }
+  }, [interimTranscript, transcript, alwaysOn, isListening, isStreaming, isSpeaking, stopListening, resetTranscript, sendMessage])
+
+  // Start listening when alwaysOn is enabled
+  useEffect(() => {
+    if (alwaysOn && isSupported && !isListening && !isStreaming && !isSpeaking) {
+      resetTranscript()
+      startListening()
+    }
+  }, [alwaysOn, isSupported, isListening, isStreaming, isSpeaking, resetTranscript, startListening])
+
+  // Auto-speak AI response when alwaysOn and streaming finishes
+  const prevMessageCountRef = useRef(messages.length)
+  useEffect(() => {
+    if (!alwaysOn || isStreaming) return
+    if (messages.length > prevMessageCountRef.current) {
+      const lastMsg = messages[messages.length - 1]
+      if (lastMsg?.role === 'assistant') {
+        speak(lastMsg.content)
+      }
+    }
+    prevMessageCountRef.current = messages.length
+  }, [messages, isStreaming, alwaysOn, speak])
+
+  // Resume listening 500ms after TTS finishes
+  const wasSpeakingRef = useRef(false)
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null
+    if (isSpeaking) {
+      wasSpeakingRef.current = true
+      if (isListening) stopListening()
+    } else if (wasSpeakingRef.current) {
+      wasSpeakingRef.current = false
+      if (alwaysOn && !isStreaming) {
+        timer = setTimeout(() => {
+          resetTranscript()
+          startListening()
+        }, 500)
+      }
+    }
+    return () => {
+      if (timer) clearTimeout(timer)
+    }
+  }, [isSpeaking, alwaysOn, isStreaming, isListening, stopListening, resetTranscript, startListening])
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current)
+    }
+  }, [])
+
+  // --- Scroll to bottom ---
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, streamingContent])
@@ -49,6 +146,12 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
     setInputText((prev) => prev + (prev ? ' ' : '') + text)
   }
 
+  const handleDisableAlwaysOn = useCallback(() => {
+    setAlwaysOn(false)
+    stopListening()
+    cancelSpeech()
+  }, [setAlwaysOn, stopListening, cancelSpeech])
+
   // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
@@ -62,8 +165,8 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
       {/* Header row: mode switcher + always listening indicator */}
       <div className="px-4 py-3 border-b border-outline-variant bg-surface/80 backdrop-blur-sm flex items-center justify-between">
         <ModeSwitcher />
-        {alwaysListening && (
-          <AlwaysListeningBanner onDisable={() => setAlwaysListening(false)} />
+        {alwaysOn && (
+          <AlwaysListeningBanner onDisable={handleDisableAlwaysOn} />
         )}
       </div>
 
@@ -106,6 +209,16 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Interim transcript preview (always-listening) */}
+      {alwaysOn && (transcript || interimTranscript) && (
+        <div className="px-4 py-2 bg-surface-container-low border-t border-outline-variant">
+          <p className="font-body-md text-on-surface-variant italic text-sm max-w-content mx-auto">
+            {transcript}
+            <span className="text-outline">{interimTranscript}</span>
+          </p>
+        </div>
+      )}
+
       {/* Input */}
       <div className="p-4 md:p-6 bg-surface-container-low border-t border-aged-paper">
         <div className="max-w-content mx-auto">
@@ -123,6 +236,23 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
               />
               <div className="flex items-center gap-2 border-l border-outline-variant pl-2">
                 <VoiceToggle onTranscript={handleVoiceTranscript} />
+                {isSupported && (
+                  <button
+                    type="button"
+                    onClick={() => alwaysOn ? handleDisableAlwaysOn() : setAlwaysOn(true)}
+                    title={alwaysOn ? 'Disable always listening' : 'Enable always listening'}
+                    aria-label={alwaysOn ? 'Disable always listening' : 'Enable always listening'}
+                    className={`p-2 rounded-full transition-all ${
+                      alwaysOn
+                        ? 'bg-primary text-surface animate-pulse'
+                        : 'text-on-surface-variant hover:text-primary hover:bg-surface-container'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined text-[20px]">
+                      {alwaysOn ? 'hearing' : 'hearing_disabled'}
+                    </span>
+                  </button>
+                )}
                 <button
                   type="submit"
                   disabled={!inputText.trim() || isStreaming}

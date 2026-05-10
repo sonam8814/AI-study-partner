@@ -32,10 +32,15 @@ export function useVoice(): UseVoiceReturn {
   const [transcript, setTranscript] = useState('')
   const [interimTranscript, setInterimTranscript] = useState('')
   const [error, setError] = useState<string | null>(null)
+  // Start false to match server render; set to true after mount to avoid hydration mismatch
+  const [isSupported, setIsSupported] = useState(false)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null)
-  const isSupported = !!SR && typeof window !== 'undefined' && !!window.speechSynthesis
+
+  useEffect(() => {
+    setIsSupported(!!SR && !!window.speechSynthesis)
+  }, [])
 
   const stopListening = useCallback(() => {
     recognitionRef.current?.stop()

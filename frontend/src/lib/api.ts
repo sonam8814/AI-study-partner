@@ -1,7 +1,3 @@
-import { createClient } from '@/lib/supabase/client'
-
-const BASE = process.env.NEXT_PUBLIC_API_BASE_URL!
-
 export class ApiError extends Error {
   constructor(message: string, public status: number, public code?: string) {
     super(message)
@@ -9,18 +5,15 @@ export class ApiError extends Error {
   }
 }
 
-async function authHeader(): Promise<HeadersInit> {
-  const supabase = createClient()
-  const { data } = await supabase.auth.getSession()
-  return data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {}
-}
+// All API calls go through the Next.js proxy to avoid CORS issues.
+// The proxy at /api/proxy/[...path] forwards requests server-side to the backend.
+const PROXY = '/api/proxy/api/v1'
 
 export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${BASE}/api/v1${path}`, {
+  const res = await fetch(`${PROXY}${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      ...(await authHeader()),
       ...init.headers,
     },
   })
@@ -61,9 +54,9 @@ export async function* apiStream(
   path: string,
   body: unknown
 ): AsyncGenerator<SSEEvent> {
-  const res = await fetch(`${BASE}/api/v1${path}`, {
+  const res = await fetch(`${PROXY}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...(await authHeader()) },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
   if (!res.ok || !res.body) {

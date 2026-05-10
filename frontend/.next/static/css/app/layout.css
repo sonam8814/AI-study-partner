@@ -552,6 +552,10 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -1405,6 +1409,10 @@ video {
   line-height: 1.4;
   letter-spacing: 0.05em;
   font-weight: 600;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 .text-xl {
   font-size: 1.25rem;

@@ -1,3 +1,8 @@
 {
-  "/page": "app/page.js"
+  "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js",
+  "/page": "app/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/(app)/weakspots/page": "app/(app)/weakspots/page.js",
+  "/(app)/library/page": "app/(app)/library/page.js",
+  "/(app)/dashboard/page": "app/(app)/dashboard/page.js"
 }
