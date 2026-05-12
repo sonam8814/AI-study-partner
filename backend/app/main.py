@@ -1,12 +1,16 @@
 # app/main.py
 from __future__ import annotations
 
+import time
+import uuid
+from collections import defaultdict
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from loguru import logger
+from starlette.middleware.base import BaseHTTPMiddleware
 import sys
 
 from app.config import settings
@@ -72,6 +76,62 @@ app.add_middleware(
 )
 
 
+# ── Request ID Middleware ────────────────────────────────────────────────────
+class RequestIDMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        request_id = str(uuid.uuid4())
+        request.state.request_id = request_id
+        response = await call_next(request)
+        response.headers["X-Request-ID"] = request_id
+        return response
+
+
+app.add_middleware(RequestIDMiddleware)
+
+
+# ── Rate Limiting ────────────────────────────────────────────────────────────
+_rate_buckets: dict[str, list[float]] = defaultdict(list)
+
+LLM_PATHS = {"/api/v1/chat", "/api/v1/feynman/prompt", "/api/v1/feynman/critique"}
+
+
+class RateLimitMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        auth = request.headers.get("authorization", "")
+        if not auth.startswith("Bearer "):
+            return await call_next(request)
+
+        token_hash = str(hash(auth))
+        now = time.time()
+        window = 60.0
+
+        is_llm = request.url.path in LLM_PATHS
+        limit = settings.RATE_LIMIT_PER_MINUTE if is_llm else 60
+
+        bucket = _rate_buckets[token_hash]
+        _rate_buckets[token_hash] = [t for t in bucket if now - t < window]
+        bucket = _rate_buckets[token_hash]
+
+        if len(bucket) >= limit:
+            return JSONResponse(
+                status_code=429,
+                content={
+                    "error": {
+                        "code": "RATE_LIMIT_EXCEEDED",
+                        "message": f"Rate limit exceeded. Max {limit} requests per minute.",
+                        "details": {},
+                    }
+                },
+                headers={"Retry-After": "60"},
+            )
+
+        bucket.append(now)
+        return await call_next(request)
+
+
+app.add_middleware(RateLimitMiddleware)
+
+
 # ── Routers ───────────────────────────────────────────────────────────────────
 from app.api.routes.health import router as health_router
 from app.api.routes.materials import router as materials_router
@@ -90,8 +150,9 @@ app.include_router(weakspots_router, prefix="/api/v1")
 
 # ── Global error handler ──────────────────────────────────────────────────────
 @app.exception_handler(Exception)
-async def unhandled_exception_handler(request, exc: Exception):
-    logger.exception(f"Unhandled error on {request.method} {request.url}: {exc}")
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    request_id = getattr(request.state, "request_id", str(uuid.uuid4()))
+    logger.exception(f"[{request_id}] Unhandled error on {request.method} {request.url}: {exc}")
     return JSONResponse(
         status_code=500,
         content={
@@ -99,6 +160,7 @@ async def unhandled_exception_handler(request, exc: Exception):
                 "code": "INTERNAL_ERROR",
                 "message": "An unexpected error occurred.",
                 "details": {},
-            }
+            },
+            "request_id": request_id,
         },
     )

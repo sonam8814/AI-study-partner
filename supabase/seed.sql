@@ -1,0 +1,11 @@
+-- Seed data for development/testing
+-- This file is intentionally minimal. Create test data via the app UI or API.
+
+-- Example: Insert a test material (requires a valid user_id from auth.users)
+-- insert into public.materials (user_id, title, markdown_content, tags)
+-- values (
+--   'your-user-uuid-here',
+--   'Photosynthesis Notes',
+--   '# Photosynthesis\n\nPhotosynthesis is the process...',
+--   ARRAY['biology', 'plants']
+-- );

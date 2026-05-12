@@ -32,12 +32,14 @@ class LLMClient(ABC):
         """Non-streaming completion, returns full response text."""
 
 
+_SENTINEL = object()
+
+
 # ── Groq ───────────────────────────────────────────────────────────────────────
 
 class GroqClient(LLMClient):
     def __init__(self, api_key: str, model: str) -> None:
-        import groq as _groq
-        self._client = _groq.AsyncGroq(api_key=api_key)
+        self._api_key = api_key
         self._model = model
 
     async def stream_chat(
@@ -47,32 +49,65 @@ class GroqClient(LLMClient):
         temperature: float = 0.4,
         max_tokens: int = 1024,
     ) -> AsyncIterator[str]:
-        import groq as _groq
-        msgs = [{"role": "system", "content": system}] + messages
-        last_err: Exception | None = None
-        for attempt in range(3):
-            try:
-                stream = await self._client.chat.completions.create(
-                    model=self._model,
-                    messages=msgs,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                    stream=True,
-                )
-                async for chunk in stream:
-                    delta = chunk.choices[0].delta.content
-                    if delta:
-                        yield delta
-                return
-            except (_groq.APIStatusError, _groq.APITimeoutError, _groq.APIConnectionError) as e:
-                last_err = e
-                # Don't retry non-rate-limit 4xx errors
-                if isinstance(e, _groq.APIStatusError) and e.status_code < 500 and e.status_code != 429:
-                    raise
-                if attempt < 2:
-                    await asyncio.sleep(2 ** attempt)
-        if last_err:
-            raise last_err
+        """Stream tokens using sync Groq client in a thread + asyncio.Queue.
+
+        The groq==0.8.0 AsyncGroq streaming has a known issue where its
+        AsyncStream raises 'Attempted to call a sync iterator on an async stream'
+        when consumed inside async generators. Using the sync client in a thread
+        with call_soon_threadsafe avoids this entirely.
+        """
+        from groq import Groq, APIStatusError, APITimeoutError, APIConnectionError
+
+        queue: asyncio.Queue = asyncio.Queue()
+        loop = asyncio.get_running_loop()
+        error_holder: list[Exception] = []
+
+        def _sync_stream() -> None:
+            client = Groq(api_key=self._api_key)
+            msgs = [{"role": "system", "content": system}] + messages
+            last_err: Exception | None = None
+            for attempt in range(3):
+                try:
+                    stream = client.chat.completions.create(
+                        model=self._model,
+                        messages=msgs,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        stream=True,
+                    )
+                    for chunk in stream:
+                        delta = chunk.choices[0].delta.content
+                        if delta:
+                            loop.call_soon_threadsafe(queue.put_nowait, delta)
+                    return
+                except (APIStatusError, APITimeoutError, APIConnectionError) as e:
+                    last_err = e
+                    if isinstance(e, APIStatusError) and e.status_code < 500 and e.status_code != 429:
+                        error_holder.append(e)
+                        return
+                    if attempt < 2:
+                        import time
+                        time.sleep(2 ** attempt)
+            if last_err:
+                error_holder.append(last_err)
+
+        future = loop.run_in_executor(None, _sync_stream)
+
+        try:
+            while True:
+                try:
+                    token = await asyncio.wait_for(queue.get(), timeout=0.05)
+                    yield token
+                except asyncio.TimeoutError:
+                    if future.done():
+                        while not queue.empty():
+                            yield queue.get_nowait()
+                        break
+        finally:
+            await future
+
+        if error_holder:
+            raise error_holder[0]
 
     async def complete(
         self,
@@ -82,38 +117,43 @@ class GroqClient(LLMClient):
         max_tokens: int = 512,
         json_mode: bool = False,
     ) -> str:
-        import groq as _groq
-        msgs = [{"role": "system", "content": system}] + messages
-        kwargs: dict = {
-            "model": self._model,
-            "messages": msgs,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        }
-        if json_mode:
-            kwargs["response_format"] = {"type": "json_object"}
-        last_err: Exception | None = None
-        for attempt in range(3):
-            try:
-                resp = await self._client.chat.completions.create(**kwargs)
-                return resp.choices[0].message.content or ""
-            except (_groq.APIStatusError, _groq.APITimeoutError, _groq.APIConnectionError) as e:
-                last_err = e
-                if isinstance(e, _groq.APIStatusError) and e.status_code < 500 and e.status_code != 429:
-                    raise
-                if attempt < 2:
-                    await asyncio.sleep(2 ** attempt)
-        if last_err:
-            raise last_err
-        return ""
+        from groq import Groq, APIStatusError, APITimeoutError, APIConnectionError
+
+        def _sync_complete() -> str:
+            client = Groq(api_key=self._api_key)
+            msgs = [{"role": "system", "content": system}] + messages
+            kwargs: dict = {
+                "model": self._model,
+                "messages": msgs,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+            }
+            if json_mode:
+                kwargs["response_format"] = {"type": "json_object"}
+            last_err: Exception | None = None
+            for attempt in range(3):
+                try:
+                    resp = client.chat.completions.create(**kwargs)
+                    return resp.choices[0].message.content or ""
+                except (APIStatusError, APITimeoutError, APIConnectionError) as e:
+                    last_err = e
+                    if isinstance(e, APIStatusError) and e.status_code < 500 and e.status_code != 429:
+                        raise
+                    if attempt < 2:
+                        import time
+                        time.sleep(2 ** attempt)
+            if last_err:
+                raise last_err
+            return ""
+
+        return await asyncio.to_thread(_sync_complete)
 
 
 # ── Ollama ─────────────────────────────────────────────────────────────────────
 
 class OllamaClient(LLMClient):
     def __init__(self, host: str, model: str) -> None:
-        import ollama as _ollama
-        self._client = _ollama.AsyncClient(host=host)
+        self._host = host
         self._model = model
 
     @staticmethod
@@ -129,28 +169,56 @@ class OllamaClient(LLMClient):
         temperature: float = 0.4,
         max_tokens: int = 1024,
     ) -> AsyncIterator[str]:
+        """Stream tokens using sync Ollama client in a thread + asyncio.Queue."""
+        import ollama as _ollama
         import httpx
-        msgs = [{"role": "system", "content": system}] + messages
-        last_err: Exception | None = None
-        for attempt in range(3):
-            try:
-                stream = await self._client.chat(
-                    model=self._model,
-                    messages=msgs,
-                    stream=True,
-                    options={"temperature": temperature, "num_predict": max_tokens},
-                )
-                async for chunk in stream:
-                    delta = self._content(chunk)
-                    if delta:
-                        yield delta
-                return
-            except (httpx.ConnectError, httpx.TimeoutException) as e:
-                last_err = e
-                if attempt < 2:
-                    await asyncio.sleep(2 ** attempt)
-        if last_err:
-            raise last_err
+
+        queue: asyncio.Queue = asyncio.Queue()
+        loop = asyncio.get_running_loop()
+        error_holder: list[Exception] = []
+
+        def _sync_stream() -> None:
+            client = _ollama.Client(host=self._host)
+            msgs = [{"role": "system", "content": system}] + messages
+            last_err: Exception | None = None
+            for attempt in range(3):
+                try:
+                    stream = client.chat(
+                        model=self._model,
+                        messages=msgs,
+                        stream=True,
+                        options={"temperature": temperature, "num_predict": max_tokens},
+                    )
+                    for chunk in stream:
+                        delta = OllamaClient._content(chunk)
+                        if delta:
+                            loop.call_soon_threadsafe(queue.put_nowait, delta)
+                    return
+                except (httpx.ConnectError, httpx.TimeoutException, Exception) as e:
+                    last_err = e
+                    if attempt < 2:
+                        import time
+                        time.sleep(2 ** attempt)
+            if last_err:
+                error_holder.append(last_err)
+
+        future = loop.run_in_executor(None, _sync_stream)
+
+        try:
+            while True:
+                try:
+                    token = await asyncio.wait_for(queue.get(), timeout=0.05)
+                    yield token
+                except asyncio.TimeoutError:
+                    if future.done():
+                        while not queue.empty():
+                            yield queue.get_nowait()
+                        break
+        finally:
+            await future
+
+        if error_holder:
+            raise error_holder[0]
 
     async def complete(
         self,
@@ -160,26 +228,33 @@ class OllamaClient(LLMClient):
         max_tokens: int = 512,
         json_mode: bool = False,
     ) -> str:
+        import ollama as _ollama
         import httpx
-        msgs = [{"role": "system", "content": system}] + messages
-        last_err: Exception | None = None
-        for attempt in range(3):
-            try:
-                resp = await self._client.chat(
-                    model=self._model,
-                    messages=msgs,
-                    stream=False,
-                    options={"temperature": temperature, "num_predict": max_tokens},
-                    format="json" if json_mode else "",
-                )
-                return self._content(resp)
-            except (httpx.ConnectError, httpx.TimeoutException) as e:
-                last_err = e
-                if attempt < 2:
-                    await asyncio.sleep(2 ** attempt)
-        if last_err:
-            raise last_err
-        return ""
+
+        def _sync_complete() -> str:
+            client = _ollama.Client(host=self._host)
+            msgs = [{"role": "system", "content": system}] + messages
+            last_err: Exception | None = None
+            for attempt in range(3):
+                try:
+                    resp = client.chat(
+                        model=self._model,
+                        messages=msgs,
+                        stream=False,
+                        options={"temperature": temperature, "num_predict": max_tokens},
+                        format="json" if json_mode else "",
+                    )
+                    return OllamaClient._content(resp)
+                except (httpx.ConnectError, httpx.TimeoutException) as e:
+                    last_err = e
+                    if attempt < 2:
+                        import time
+                        time.sleep(2 ** attempt)
+            if last_err:
+                raise last_err
+            return ""
+
+        return await asyncio.to_thread(_sync_complete)
 
 
 # ── Failover wrapper ───────────────────────────────────────────────────────────
@@ -198,23 +273,27 @@ class FailoverLLMClient(LLMClient):
         temperature: float = 0.4,
         max_tokens: int = 1024,
     ) -> AsyncIterator[str]:
-        primary_gen = self._primary.stream_chat(system, messages, temperature, max_tokens)
         try:
-            # Peek at the first token to validate the connection
-            first = await primary_gen.__anext__()
-        except StopAsyncIteration:
-            return
+            had_tokens = False
+            async for token in self._primary.stream_chat(
+                system, messages, temperature, max_tokens
+            ):
+                had_tokens = True
+                yield token
+            if had_tokens:
+                return
         except Exception as primary_err:
             if self._fallback is None:
                 raise
-            logger.warning(f"Primary LLM stream_chat failed ({primary_err!r}), falling back to Ollama")
-            async for token in self._fallback.stream_chat(system, messages, temperature, max_tokens):
-                yield token
-            return
+            logger.warning(
+                f"Primary LLM stream_chat failed ({primary_err!r}), falling back"
+            )
 
-        yield first
-        async for token in primary_gen:
-            yield token
+        if self._fallback:
+            async for token in self._fallback.stream_chat(
+                system, messages, temperature, max_tokens
+            ):
+                yield token
 
     async def complete(
         self,
@@ -225,12 +304,18 @@ class FailoverLLMClient(LLMClient):
         json_mode: bool = False,
     ) -> str:
         try:
-            return await self._primary.complete(system, messages, temperature, max_tokens, json_mode)
+            return await self._primary.complete(
+                system, messages, temperature, max_tokens, json_mode
+            )
         except Exception as primary_err:
             if self._fallback is None:
                 raise
-            logger.warning(f"Primary LLM complete failed ({primary_err!r}), falling back to Ollama")
-            return await self._fallback.complete(system, messages, temperature, max_tokens, json_mode)
+            logger.warning(
+                f"Primary LLM complete failed ({primary_err!r}), falling back"
+            )
+            return await self._fallback.complete(
+                system, messages, temperature, max_tokens, json_mode
+            )
 
 
 # ── Factory ────────────────────────────────────────────────────────────────────
@@ -246,7 +331,9 @@ def get_llm_client() -> LLMClient:
             logger.warning("GROQ_API_KEY not set — using Ollama directly")
             if fallback:
                 return fallback
-            raise RuntimeError("No LLM configured: set GROQ_API_KEY or use LLM_PROVIDER=ollama")
+            raise RuntimeError(
+                "No LLM configured: set GROQ_API_KEY or use LLM_PROVIDER=ollama"
+            )
         primary = GroqClient(api_key=settings.GROQ_API_KEY, model=settings.GROQ_MODEL)
         return FailoverLLMClient(primary=primary, fallback=fallback)
 

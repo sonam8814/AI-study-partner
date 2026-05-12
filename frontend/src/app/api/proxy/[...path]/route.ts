@@ -41,6 +41,13 @@ async function proxyRequest(request: NextRequest): Promise<NextResponse> {
     responseHeaders.set(key, value)
   })
 
+  // Ensure SSE streams are not buffered
+  const contentType = res.headers.get('content-type') || ''
+  if (contentType.includes('text/event-stream')) {
+    responseHeaders.set('Cache-Control', 'no-cache')
+    responseHeaders.set('X-Accel-Buffering', 'no')
+  }
+
   return new NextResponse(res.body, {
     status: res.status,
     headers: responseHeaders,
