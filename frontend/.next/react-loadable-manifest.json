@@ -1,1 +1,23 @@
-{}
+{
+  "app/(app)/library/new/page.tsx -> @/components/library/MarkdownEditor": {
+    "id": "app/(app)/library/new/page.tsx -> @/components/library/MarkdownEditor",
+    "files": [
+      "static/css/_app-pages-browser_src_components_library_MarkdownEditor_tsx.css",
+      "static/chunks/_app-pages-browser_src_components_library_MarkdownEditor_tsx.js"
+    ]
+  },
+  "app/(app)/materials/[id]/page.tsx -> @/components/library/MarkdownEditor": {
+    "id": "app/(app)/materials/[id]/page.tsx -> @/components/library/MarkdownEditor",
+    "files": [
+      "static/css/_app-pages-browser_src_components_library_MarkdownEditor_tsx.css",
+      "static/chunks/_app-pages-browser_src_components_library_MarkdownEditor_tsx.js"
+    ]
+  },
+  "components/library/MarkdownEditor.tsx -> @uiw/react-md-editor": {
+    "id": "components/library/MarkdownEditor.tsx -> @uiw/react-md-editor",
+    "files": [
+      "static/css/_app-pages-browser_node_modules_uiw_react-md-editor_esm_index_js.css",
+      "static/chunks/_app-pages-browser_node_modules_uiw_react-md-editor_esm_index_js.js"
+    ]
+  }
+}

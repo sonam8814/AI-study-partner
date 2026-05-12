@@ -1,7 +1,9 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js",
-  "/(app)/weakspots/page": "app/(app)/weakspots/page.js",
-  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
   "/(app)/library/page": "app/(app)/library/page.js",
-  "/(app)/materials/[id]/study/page": "app/(app)/materials/[id]/study/page.js"
+  "/(app)/materials/[id]/study/page": "app/(app)/materials/[id]/study/page.js",
+  "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
+  "/(app)/library/new/page": "app/(app)/library/new/page.js",
+  "/(app)/weakspots/page": "app/(app)/weakspots/page.js"
 }

@@ -31,10 +31,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/materials/[id]/study/page.js"
     ],
+    "/(app)/materials/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(app)/materials/[id]/page.js"
+    ],
+    "/(app)/library/new/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(app)/library/new/page.js"
+    ],
     "/(app)/weakspots/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(app)/weakspots/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

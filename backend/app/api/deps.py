@@ -5,29 +5,31 @@ from uuid import UUID
 
 import httpx
 from fastapi import Header, HTTPException, status
-from jose import jwk, jwt, JWTError
+from jose import jwt, JWTError
 from loguru import logger
 
 from app.config import settings
 
 
 @lru_cache(maxsize=1)
-def _get_jwks_key():
-    """Fetch the Supabase JWKS public key once and cache it."""
+def _get_jwks() -> dict:
+    """Fetch the Supabase JWKS key set once and cache it."""
     url = f"{settings.SUPABASE_URL}/auth/v1/.well-known/jwks.json"
     resp = httpx.get(url, timeout=10)
     resp.raise_for_status()
-    key_data = resp.json()["keys"][0]
-    logger.info(f"JWKS loaded — alg: {key_data.get('alg')}, kid: {key_data.get('kid')}")
-    return jwk.construct(key_data)
+    jwks = resp.json()
+    if jwks.get("keys"):
+        k = jwks["keys"][0]
+        logger.info(f"JWKS loaded — alg: {k.get('alg')}, kid: {k.get('kid')}")
+    return jwks
 
 
 def _decode_token(token: str) -> dict:
     """Try ES256 (JWKS) first, fall back to HS256 (legacy secret)."""
     # ES256 — newer Supabase projects
     try:
-        key = _get_jwks_key()
-        return jwt.decode(token, key, algorithms=["ES256"], audience="authenticated")
+        jwks = _get_jwks()
+        return jwt.decode(token, jwks, algorithms=["ES256"], audience="authenticated")
     except JWTError:
         pass
 

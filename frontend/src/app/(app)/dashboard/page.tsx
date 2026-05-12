@@ -106,7 +106,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="bg-surface-container-low border border-aged-paper rounded-lg p-4 w-40 flex flex-col justify-between">
-                <span className="font-label-sm text-on-surface-variant uppercase tracking-wider">Minutes Today</span>
+                <span className="font-label-sm text-on-surface-variant uppercase tracking-wider">Total Study</span>
                 <div className="mt-4">
                   <span className="text-[32px] text-primary font-bold" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
                     {gardenStats.total_minutes_studied}
