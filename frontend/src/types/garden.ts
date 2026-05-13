@@ -8,6 +8,7 @@ export interface GardenStats {
   current_plant_stage: number
   plants_grown_total: number
   garden_layout: Array<{ grown_at: string; streak: number }>
+  monthly_study_dates: string[]
   updated_at: string
 }
 

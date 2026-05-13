@@ -15,34 +15,41 @@ export default function DualPaneLayout({ material }: DualPaneLayoutProps) {
   return (
     <>
       {/* Mobile tab switcher */}
-      <nav className="md:hidden flex border-b border-outline-variant bg-surface sticky top-16 z-40">
+      <nav className="md:hidden flex border-b border-[#D4C9A8]/60 sticky top-14 z-40"
+        style={{ background: 'linear-gradient(180deg, #F9F5EC 0%, #F3EDE0 100%)' }}>
         <button
           onClick={() => setActiveTab('chat')}
-          className={`flex-1 py-3 font-label-sm text-label-sm ${
-            activeTab === 'chat' ? 'border-b-2 border-primary text-primary' : 'text-on-surface-variant'
+          className={`flex-1 py-3 text-[13px] font-semibold transition-all duration-200 ${
+            activeTab === 'chat'
+              ? 'border-b-2 border-primary text-primary'
+              : 'text-[#7A7067]'
           }`}
+          style={{ fontFamily: 'Literata, Georgia, serif' }}
         >
           Chat
         </button>
         <button
           onClick={() => setActiveTab('notes')}
-          className={`flex-1 py-3 font-label-sm text-label-sm ${
-            activeTab === 'notes' ? 'border-b-2 border-primary text-primary' : 'text-on-surface-variant'
+          className={`flex-1 py-3 text-[13px] font-semibold transition-all duration-200 ${
+            activeTab === 'notes'
+              ? 'border-b-2 border-primary text-primary'
+              : 'text-[#7A7067]'
           }`}
+          style={{ fontFamily: 'Literata, Georgia, serif' }}
         >
           Notes
         </button>
       </nav>
 
       {/* Desktop: side-by-side */}
-      <main className="flex h-[calc(100vh-64px)] overflow-hidden">
+      <main className="flex h-[calc(100vh-56px)] overflow-hidden">
         {/* Chat pane */}
         <div className={`${activeTab === 'chat' ? 'flex' : 'hidden'} md:flex flex-1`}>
           <ChatPanel materialId={material.id} notesPanelRef={notesPanelRef} />
         </div>
 
         {/* Notes pane */}
-        <div className={`${activeTab === 'notes' ? 'flex' : 'hidden'} md:flex w-full md:w-[400px] border-l border-outline-variant`}>
+        <div className={`${activeTab === 'notes' ? 'flex' : 'hidden'} md:flex w-full md:w-[400px] border-l border-[#D4C9A8]/60`}>
           <NotesPanel ref={notesPanelRef} material={material} />
         </div>
       </main>

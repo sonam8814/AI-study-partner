@@ -34,21 +34,24 @@ export default function ChatMessage({ message, onScrollTo }: ChatMessageProps) {
   if (message.role === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[80%] bg-primary text-surface-container-lowest px-6 py-4 rounded-xl rounded-tr-none">
-          <p className="font-body-md text-body-md">{message.content}</p>
+        <div className="max-w-[80%] px-5 py-3.5 rounded-2xl rounded-tr-sm"
+          style={{
+            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+            boxShadow: '0 2px 8px rgba(3, 51, 39, 0.15)',
+          }}>
+          <p className="font-body-md text-body-md text-white/95">{message.content}</p>
         </div>
       </div>
     )
   }
 
   // For assistant messages, we need to handle citation replacement within markdown
-  // We render the content processing [N] markers
   const textWithCitations = message.content
   const hasCitations = citations.length > 0
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="pl-6 border-l-2 border-primary">
+      <div className="pl-5 border-l-[3px] rounded-sm" style={{ borderColor: '#C8A472' }}>
         <div className="font-body-lg text-body-lg text-on-surface leading-relaxed prose-library">
           {hasCitations ? (
             <div>

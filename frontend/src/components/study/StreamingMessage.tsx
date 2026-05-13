@@ -7,7 +7,7 @@ interface StreamingMessageProps {
 export default function StreamingMessage({ content }: StreamingMessageProps) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="pl-6 border-l-2 border-primary">
+      <div className="pl-5 border-l-[3px] rounded-sm" style={{ borderColor: '#C8A472' }}>
         <p className="font-body-lg text-body-lg text-on-surface leading-relaxed streaming-cursor">
           {content}
         </p>

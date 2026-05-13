@@ -50,20 +50,26 @@ export default function LibraryPage() {
   })
 
   return (
-    <div className="flex-1 px-4 md:px-[40px] py-8 max-w-content mx-auto mb-20 md:mb-0">
+    <div className="flex-1 px-4 md:px-[40px] py-8 max-w-content mx-auto mb-20 md:mb-0 animate-fade-in-up">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
-          <h2 className="font-display-lg text-[36px] text-on-surface" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          <h2 className="text-[36px] text-on-surface font-bold"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
             My Library
           </h2>
-          <p className="text-on-surface-variant font-body-md mt-2">
+          <p className="text-[#7A7067] font-body-md mt-1 italic"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>
             A personal archive of your gathered knowledge and manuscripts.
           </p>
         </div>
         <Link
           href="/library/new"
-          className="bg-primary text-on-primary px-6 py-3 rounded-lg flex items-center gap-2 font-label-sm hover:opacity-90 transition-opacity self-start"
+          className="flex items-center gap-2 text-white px-6 py-3 rounded-lg font-label-sm transition-all hover:opacity-90 self-start"
+          style={{
+            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+            boxShadow: '0 4px 12px rgba(3, 51, 39, 0.2)',
+          }}
         >
           <span className="material-symbols-outlined text-[20px]">add</span>
           New Material
@@ -72,13 +78,13 @@ export default function LibraryPage() {
 
       {/* Search */}
       <div className="relative mb-8 group">
-        <span className="material-symbols-outlined absolute left-0 bottom-3 text-outline">search</span>
+        <span className="material-symbols-outlined absolute left-0 bottom-3 text-[#A09888]">search</span>
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search your materials..."
-          className="w-full bg-transparent border-t-0 border-x-0 border-b border-on-surface py-3 pl-8 focus:ring-0 focus:border-secondary transition-colors font-body-lg placeholder:text-outline-variant outline-none"
+          className="w-full bg-transparent border-t-0 border-x-0 border-b border-[#D4C9A8] py-3 pl-8 focus:ring-0 focus:border-secondary transition-colors font-body-lg placeholder:text-[#C0B8A8] outline-none"
         />
       </div>
 
@@ -87,9 +93,12 @@ export default function LibraryPage() {
         <div className="flex items-center gap-3 overflow-x-auto pb-4 hide-scrollbar mb-10 whitespace-nowrap">
           <button
             onClick={() => setSelectedTag(null)}
-            className={`px-4 py-1.5 rounded-full font-label-sm transition-colors ${
-              !selectedTag ? 'bg-primary text-on-primary' : 'border border-aged-paper text-on-surface-variant hover:bg-surface-container'
+            className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 ${
+              !selectedTag
+                ? 'bg-primary text-white shadow-sm'
+                : 'border border-[#D4C9A8] text-[#7A7067] hover:bg-[#EDE7D9] hover:text-primary'
             }`}
+            style={{ fontFamily: 'Literata, Georgia, serif' }}
           >
             All Volumes
           </button>
@@ -97,11 +106,12 @@ export default function LibraryPage() {
             <button
               key={tag}
               onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-              className={`px-4 py-1.5 rounded-full font-label-sm transition-colors ${
+              className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 ${
                 selectedTag === tag
-                  ? 'bg-primary text-on-primary'
-                  : 'border border-aged-paper text-on-surface-variant hover:bg-surface-container'
+                  ? 'bg-primary text-white shadow-sm'
+                  : 'border border-[#D4C9A8] text-[#7A7067] hover:bg-[#EDE7D9] hover:text-primary'
               }`}
+              style={{ fontFamily: 'Literata, Georgia, serif' }}
             >
               {tag}
             </button>
@@ -115,23 +125,28 @@ export default function LibraryPage() {
           <Spinner />
         </div>
       ) : filtered.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {filtered.map((m) => (
             <MaterialCard key={m.id} material={m} onDelete={handleDelete} />
           ))}
         </div>
       ) : (
-        <div className="mt-12 flex flex-col items-center text-center px-6 py-16 border-2 border-dashed border-aged-paper rounded-xl bg-surface-container-lowest">
-          <div className="mb-6 opacity-60">
-            <span className="material-symbols-outlined text-primary text-[80px]">auto_stories</span>
+        <div className="mt-12 flex flex-col items-center text-center px-6 py-20 rounded-xl"
+          style={{
+            border: '2px dashed #D4C9A8',
+            background: 'linear-gradient(180deg, #FDFBF7 0%, #F9F5EC 100%)',
+          }}>
+          <div className="mb-6 opacity-40">
+            <span className="material-symbols-outlined text-primary text-[72px]">auto_stories</span>
           </div>
-          <h3 className="font-headline-md text-on-surface mb-2">Your library is empty</h3>
-          <p className="text-on-surface-variant max-w-sm mb-8">
+          <h3 style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-[22px] text-on-surface mb-2 font-semibold">Your library is empty</h3>
+          <p className="text-[#7A7067] max-w-sm mb-8 italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>
             Begin your scholarly journey by adding your first manuscript or lecture notes.
           </p>
           <Link
             href="/library/new"
-            className="border border-primary text-primary px-8 py-2.5 rounded-lg font-label-sm hover:bg-primary-container hover:text-on-primary-container transition-all"
+            className="border-2 border-primary text-primary px-8 py-3 rounded-lg font-label-sm hover:bg-primary hover:text-white transition-all duration-200"
           >
             Add First Material
           </Link>

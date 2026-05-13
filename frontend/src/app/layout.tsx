@@ -27,10 +27,12 @@ export default function RootLayout({
           toastOptions={{
             style: {
               fontFamily: 'Literata, Georgia, serif',
-              background: '#F5EFE0',
+              background: 'linear-gradient(180deg, #F9F3E3 0%, #F0E8D4 100%)',
               color: '#1c1b1b',
-              border: '1px solid #D4C9A8',
-              borderRadius: '8px',
+              border: '1px solid #C8B88A',
+              borderRadius: '12px',
+              boxShadow: '0 4px 16px rgba(92, 61, 30, 0.1)',
+              fontSize: '14px',
             },
           }}
         />

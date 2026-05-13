@@ -57,12 +57,16 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
       // Only set silence timer if there's accumulated content
       if (transcript || interimTranscript) {
         silenceTimerRef.current = setTimeout(() => {
-          // 1500ms of silence — auto-submit the final transcript
+          // 1500ms of silence — populate the input so user can review & send manually
           const text = transcript.trim()
           if (text) {
             stopListening()
             resetTranscript()
-            sendMessage(text)
+            setInputText((prev) => prev + (prev ? ' ' : '') + text)
+            // Re-start listening if always-on
+            if (alwaysOn && !isStreaming) {
+              setTimeout(() => startListening(), 300)
+            }
           }
         }, 1500)
       }
@@ -71,7 +75,7 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
     return () => {
       if (silenceTimerRef.current) clearTimeout(silenceTimerRef.current)
     }
-  }, [interimTranscript, transcript, alwaysOn, isListening, isStreaming, isSpeaking, stopListening, resetTranscript, sendMessage])
+  }, [interimTranscript, transcript, alwaysOn, isListening, isStreaming, isSpeaking, stopListening, resetTranscript, startListening])
 
   // Start listening when alwaysOn is enabled
   useEffect(() => {
@@ -161,9 +165,10 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
   }, [inputText])
 
   return (
-    <section className="flex-1 flex flex-col parchment-texture border-r border-outline-variant relative overflow-hidden">
+    <section className="flex-1 flex flex-col parchment-texture border-r border-[#D4C9A8]/60 relative overflow-hidden">
       {/* Header row: mode switcher + always listening indicator */}
-      <div className="px-4 py-3 border-b border-outline-variant bg-surface/80 backdrop-blur-sm flex items-center justify-between">
+      <div className="px-4 py-3 border-b border-[#D4C9A8]/60 glass-header flex items-center justify-between"
+        style={{ boxShadow: '0 1px 4px rgba(92, 61, 30, 0.03)' }}>
         <ModeSwitcher />
         {alwaysOn && (
           <AlwaysListeningBanner onDisable={handleDisableAlwaysOn} />
@@ -171,11 +176,14 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 scroll-smooth">
+      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 scroll-smooth custom-scrollbar">
         {messages.length === 0 && !isStreaming && (
           <div className="flex flex-col items-center justify-center h-full text-center py-16">
-            <span className="material-symbols-outlined text-primary text-[48px] mb-4 opacity-40">auto_stories</span>
-            <p className="font-body-lg text-on-surface-variant italic max-w-sm">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
+              style={{ background: 'linear-gradient(135deg, rgba(3,51,39,0.06) 0%, rgba(3,51,39,0.02) 100%)' }}>
+              <span className="material-symbols-outlined text-primary text-[36px] opacity-50">auto_stories</span>
+            </div>
+            <p className="font-body-lg text-[#7A7067] italic max-w-sm" style={{ fontFamily: 'Literata, Georgia, serif' }}>
               Ask a question, request a quiz, or say &ldquo;start Feynman mode&rdquo; to begin.
             </p>
           </div>
@@ -220,21 +228,24 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
       )}
 
       {/* Input */}
-      <div className="p-4 md:p-6 bg-surface-container-low border-t border-aged-paper">
+      <div className="p-4 md:p-6 border-t border-[#D4C9A8]/60" style={{
+        background: 'linear-gradient(180deg, #F9F5EC 0%, #F3EDE0 100%)',
+      }}>
         <div className="max-w-content mx-auto">
           <form onSubmit={handleSubmit}>
-            <div className="flex items-end gap-3 bg-surface border border-outline rounded-xl p-3 focus-within:border-secondary transition-colors">
+            <div className="flex items-end gap-3 bg-white border border-[#D4C9A8] rounded-xl p-3 focus-within:border-secondary focus-within:shadow-sm transition-all duration-200"
+              style={{ boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)' }}>
               <textarea
                 ref={textareaRef}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask a question or share your thinking…"
+                placeholder="Ask a question or share your thinking..."
                 rows={1}
-                className="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md pt-1 max-h-32 outline-none"
+                className="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md pt-1 max-h-32 outline-none placeholder:text-[#C0B8A8]"
                 disabled={isStreaming}
               />
-              <div className="flex items-center gap-2 border-l border-outline-variant pl-2">
+              <div className="flex items-center gap-1.5 border-l border-[#E8D5B0] pl-2">
                 <VoiceToggle onTranscript={handleVoiceTranscript} />
                 {isSupported && (
                   <button
@@ -242,10 +253,10 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
                     onClick={() => alwaysOn ? handleDisableAlwaysOn() : setAlwaysOn(true)}
                     title={alwaysOn ? 'Disable always listening' : 'Enable always listening'}
                     aria-label={alwaysOn ? 'Disable always listening' : 'Enable always listening'}
-                    className={`p-2 rounded-full transition-all ${
+                    className={`p-2 rounded-full transition-all duration-200 ${
                       alwaysOn
-                        ? 'bg-primary text-surface animate-pulse'
-                        : 'text-on-surface-variant hover:text-primary hover:bg-surface-container'
+                        ? 'bg-primary text-white animate-pulse'
+                        : 'text-[#7A7067] hover:text-primary hover:bg-[#EDE7D9]'
                     }`}
                   >
                     <span className="material-symbols-outlined text-[20px]">
@@ -256,10 +267,17 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
                 <button
                   type="submit"
                   disabled={!inputText.trim() || isStreaming}
-                  className="bg-primary text-surface rounded-full p-2 flex items-center justify-center hover:bg-primary-container transition-colors disabled:opacity-40 shrink-0"
+                  className="rounded-full p-2.5 flex items-center justify-center transition-all duration-200 disabled:opacity-30 shrink-0"
+                  style={{
+                    background: inputText.trim() && !isStreaming
+                      ? 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)'
+                      : '#E5E2E1',
+                    color: inputText.trim() && !isStreaming ? 'white' : '#A09888',
+                    boxShadow: inputText.trim() && !isStreaming ? '0 2px 6px rgba(3,51,39,0.2)' : 'none',
+                  }}
                   aria-label="Send message"
                 >
-                  <span className="material-symbols-outlined text-[20px]">send</span>
+                  <span className="material-symbols-outlined text-[18px]">send</span>
                 </button>
               </div>
             </div>

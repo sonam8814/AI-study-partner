@@ -51,32 +51,54 @@ export default function WeakSpotsPage() {
     }
   }
 
-  const displayed = filter === 'unresolved' ? spots : [...spots, ...resolved]
-
   return (
-    <div className="px-4 md:px-[40px] py-8 max-w-content mx-auto">
+    <div className="px-4 md:px-[40px] py-8 max-w-content mx-auto animate-fade-in-up">
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="material-symbols-outlined text-error">warning</span>
-        <h1 className="font-headline-md text-headline-md font-bold text-primary">Weak Spots</h1>
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center"
+          style={{ background: 'linear-gradient(135deg, #FFF5F5 0%, #FFEBEE 100%)', border: '1px solid #FFCDD2' }}>
+          <span className="material-symbols-outlined text-[#C62828] text-[20px]">warning</span>
+        </div>
+        <h1 className="text-[28px] font-bold text-primary"
+          style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          Weak Spots
+        </h1>
       </div>
+      <p className="text-[#7A7067] italic mb-8" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+        Topics that need extra attention based on your study sessions.
+      </p>
 
       {/* Filter toggle */}
       <div className="flex justify-center mb-10">
-        <div className="flex border border-outline p-1 rounded-lg bg-surface-container-low">
+        <div className="flex p-1 rounded-full gap-0.5" style={{
+          background: '#F0E8D4',
+          border: '1px solid #D4C9A8',
+        }}>
           <button
             onClick={() => setFilter('unresolved')}
-            className={`px-6 py-2 rounded-lg font-label-sm transition-colors ${
-              filter === 'unresolved' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+            className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
+              filter === 'unresolved'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-[#7A7067] hover:bg-[#E8DFC8]'
             }`}
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              ...(filter === 'unresolved' ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}),
+            }}
           >
             Unresolved
           </button>
           <button
             onClick={() => setFilter('all')}
-            className={`px-6 py-2 rounded-lg font-label-sm transition-colors ${
-              filter === 'all' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+            className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
+              filter === 'all'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-[#7A7067] hover:bg-[#E8DFC8]'
             }`}
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              ...(filter === 'all' ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}),
+            }}
           >
             All
           </button>
@@ -93,10 +115,13 @@ export default function WeakSpotsPage() {
           {spots.length > 0 && (
             <section className="space-y-6 mb-12">
               <div className="flex items-center gap-2 mb-4">
-                <span className="material-symbols-outlined text-error">warning</span>
-                <h2 className="font-headline-md text-primary">Priority Focus</h2>
+                <span className="material-symbols-outlined text-[#C62828]">priority_high</span>
+                <h2 className="text-[20px] text-primary font-semibold"
+                  style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Priority Focus
+                </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {spots.map((spot) => (
                   <WeakSpotItem key={spot.id} spot={spot} onResolve={handleResolve} />
                 ))}
@@ -105,31 +130,43 @@ export default function WeakSpotsPage() {
           )}
 
           {spots.length === 0 && (
-            <div className="text-center py-12">
-              <span className="material-symbols-outlined text-primary text-[48px] mb-3 block opacity-40">verified</span>
-              <p className="font-body-md text-on-surface-variant italic">
-                No unresolved weak spots — excellent work!
+            <div className="text-center py-16 rounded-xl" style={{
+              background: 'linear-gradient(180deg, #F5FFF5 0%, #F0F9F0 100%)',
+              border: '1px solid #C8E6C9',
+            }}>
+              <span className="material-symbols-outlined text-[#2E7D32] text-[48px] mb-3 block opacity-50"
+                style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+              <p className="text-[#7A7067] italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+                No unresolved weak spots - excellent work!
               </p>
             </div>
           )}
 
           {/* Resolved section */}
           {filter === 'all' && resolved.length > 0 && (
-            <section className="mt-16 pt-8 border-t border-outline-variant opacity-60">
+            <section className="mt-16 pt-8 border-t border-[#D4C9A8] opacity-70">
               <div className="flex items-center gap-2 mb-6">
-                <span className="material-symbols-outlined text-outline">task_alt</span>
-                <h2 className="font-headline-md text-on-surface-variant">Recently Resolved</h2>
+                <span className="material-symbols-outlined text-[#A09888]">task_alt</span>
+                <h2 className="text-[18px] text-[#7A7067] font-semibold"
+                  style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Recently Resolved
+                </h2>
               </div>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {resolved.slice(0, 5).map((spot) => (
-                  <div key={spot.id} className="border border-aged-paper bg-surface-dim p-4 rounded-xl flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  <div key={spot.id} className="p-4 rounded-xl flex items-center justify-between"
+                    style={{
+                      background: 'linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%)',
+                      border: '1px solid #E0E0E0',
+                    }}>
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-primary text-[20px]"
+                        style={{ fontVariationSettings: "'FILL' 1" }}>
                         verified
                       </span>
                       <div>
-                        <h3 className="font-body-md font-bold text-on-surface-variant">{spot.topic}</h3>
-                        <p className="text-label-sm text-outline">Resolved</p>
+                        <h3 className="text-[14px] font-bold text-[#7A7067]">{spot.topic}</h3>
+                        <p className="text-[11px] text-[#A09888]">Resolved</p>
                       </div>
                     </div>
                   </div>

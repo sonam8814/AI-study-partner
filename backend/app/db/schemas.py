@@ -140,6 +140,7 @@ class GardenStats(BaseModel):
     current_plant_stage: int = Field(ge=0, le=4)
     plants_grown_total: int
     garden_layout: list[dict]
+    monthly_study_dates: list[str] = []
     updated_at: datetime
 
 

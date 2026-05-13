@@ -34,19 +34,32 @@ export default function LoginPage() {
 
   return (
     <main className="w-full max-w-[440px]">
-      <div className="bg-elevated-panels border border-aged-paper rounded-lg p-8 md:p-12">
+      <div className="rounded-2xl p-8 md:p-12" style={{
+        background: 'linear-gradient(180deg, #F9F3E3 0%, #F0E8D4 100%)',
+        border: '1px solid #C8B88A',
+        boxShadow: '0 8px 40px rgba(92, 61, 30, 0.1), 0 2px 8px rgba(92, 61, 30, 0.05)',
+      }}>
         {/* Logo */}
         <div className="text-center mb-10">
-          <h1 className="font-headline-lg text-headline-lg text-primary tracking-tight">The Library</h1>
-          <p className="font-label-sm text-label-sm text-on-surface-variant mt-2 tracking-wide uppercase">
+          <div className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)' }}>
+            <span className="material-symbols-outlined text-white text-[28px]">menu_book</span>
+          </div>
+          <h1 className="text-[28px] text-primary tracking-tight font-bold"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+            The Library
+          </h1>
+          <p className="text-[12px] text-[#7A7067] mt-2 tracking-[0.15em] uppercase font-semibold"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>
             Private Archive &amp; Reading Room
           </p>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-7">
           <div className="flex flex-col">
-            <label className="font-label-sm text-label-sm text-on-surface-variant mb-1" htmlFor="email">
+            <label className="text-[12px] text-[#7A7067] mb-1.5 font-semibold tracking-wide"
+              style={{ fontFamily: 'Literata, Georgia, serif' }} htmlFor="email">
               Email Address
             </label>
             <input
@@ -61,11 +74,13 @@ export default function LoginPage() {
           </div>
 
           <div className="flex flex-col">
-            <div className="flex justify-between items-center mb-1">
-              <label className="font-label-sm text-label-sm text-on-surface-variant" htmlFor="password">
+            <div className="flex justify-between items-center mb-1.5">
+              <label className="text-[12px] text-[#7A7067] font-semibold tracking-wide"
+                style={{ fontFamily: 'Literata, Georgia, serif' }} htmlFor="password">
                 Password
               </label>
-              <a href="#" className="font-label-sm text-label-sm text-secondary hover:underline">
+              <a href="#" className="text-[12px] text-secondary font-semibold hover:underline"
+                style={{ fontFamily: 'Literata, Georgia, serif' }}>
                 Forgot?
               </a>
             </div>
@@ -83,18 +98,24 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-forest-green text-white font-label-sm text-label-sm py-4 rounded-lg hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full text-white text-[14px] font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 hover:opacity-90"
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+              boxShadow: '0 4px 12px rgba(3, 51, 39, 0.2)',
+            }}
           >
-            {loading ? 'Signing in…' : 'Sign in to Archive'}
+            {loading ? 'Signing in...' : 'Sign in to Archive'}
           </button>
         </form>
 
         {/* Divider */}
         <div className="relative my-8 flex items-center justify-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-aged-paper"></div>
+            <div className="w-full border-t border-[#D4C9A8]"></div>
           </div>
-          <div className="relative px-4 bg-elevated-panels text-on-surface-variant font-label-sm text-label-sm italic">
+          <div className="relative px-4 text-[#7A7067] text-[13px] italic"
+            style={{ fontFamily: 'Literata, Georgia, serif', background: 'linear-gradient(180deg, #F5F0E4 0%, #F0E8D4 100%)' }}>
             or
           </div>
         </div>
@@ -103,7 +124,11 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleGoogle}
-          className="w-full bg-white border border-forest-green text-forest-green font-label-sm text-label-sm py-4 rounded-lg hover:bg-surface-container-low active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+          className="w-full bg-white border border-[#D4C9A8] text-on-surface text-[14px] font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-3 hover:bg-[#F9F5EC] hover:border-primary"
+          style={{
+            fontFamily: 'Literata, Georgia, serif',
+            boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)',
+          }}
         >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
@@ -116,7 +141,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="mt-10 text-center">
-          <p className="font-body-md text-body-md text-on-surface-variant">
+          <p className="text-[14px] text-[#7A7067]" style={{ fontFamily: 'Literata, Georgia, serif' }}>
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-secondary font-bold hover:underline">
               Sign up
@@ -128,12 +153,14 @@ export default function LoginPage() {
       {/* System footer */}
       <div className="mt-8 flex justify-between items-center px-4">
         <div className="flex gap-4">
-          <a href="#" className="font-label-sm text-label-sm text-outline hover:text-ink transition-colors">Privacy</a>
-          <a href="#" className="font-label-sm text-label-sm text-outline hover:text-ink transition-colors">Terms</a>
+          <a href="#" className="text-[12px] text-[#A09888] hover:text-primary transition-colors"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>Privacy</a>
+          <a href="#" className="text-[12px] text-[#A09888] hover:text-primary transition-colors"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>Terms</a>
         </div>
-        <div className="flex items-center text-outline gap-1">
-          <span className="material-symbols-outlined text-[16px]">menu_book</span>
-          <span className="font-label-sm text-label-sm">Established 1894</span>
+        <div className="flex items-center text-[#A09888] gap-1.5">
+          <span className="material-symbols-outlined text-[14px]">menu_book</span>
+          <span className="text-[11px]" style={{ fontFamily: 'Literata, Georgia, serif' }}>Established 1894</span>
         </div>
       </div>
     </main>

@@ -15,21 +15,30 @@ export default function ModeSwitcher() {
   const { mode, setMode } = useStudyStore()
 
   return (
-    <div className="flex bg-surface-container-low border border-aged-paper rounded-full p-1 gap-1">
+    <div className="flex rounded-full p-1 gap-0.5" style={{
+      background: '#F0E8D4',
+      border: '1px solid #D4C9A8',
+    }}>
       {MODES.map((m) => (
         <button
           key={m}
           onClick={() => setMode(m)}
           className={cn(
-            'px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-colors flex items-center gap-1.5',
+            'px-3 py-1.5 rounded-full text-[13px] font-semibold transition-all duration-200 flex items-center gap-1.5',
             mode === m
-              ? 'bg-primary text-on-primary active-mode-italic'
-              : 'text-on-surface-variant hover:bg-surface-container-high'
+              ? 'bg-primary text-white shadow-sm'
+              : 'text-[#7A7067] hover:bg-[#E8DFC8] hover:text-primary'
           )}
+          style={mode === m ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}}
           title={MODE_LABELS[m]}
         >
-          <span className="material-symbols-outlined text-[16px]">{MODE_ICONS[m]}</span>
-          <span className="hidden md:inline">{MODE_LABELS[m]}</span>
+          <span className="material-symbols-outlined text-[16px]"
+            style={mode === m ? { fontVariationSettings: "'FILL' 1" } : {}}>
+            {MODE_ICONS[m]}
+          </span>
+          <span className="hidden md:inline" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+            {MODE_LABELS[m]}
+          </span>
         </button>
       ))}
     </div>

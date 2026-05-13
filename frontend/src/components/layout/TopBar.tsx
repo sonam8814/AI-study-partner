@@ -18,7 +18,8 @@ export default function TopBar({ title, showMenu = false }: TopBarProps) {
   }
 
   return (
-    <header className="bg-surface border-b border-outline-variant fixed top-0 z-50 flex items-center justify-between px-4 md:px-[40px] h-16 w-full">
+    <header className="glass-header border-b border-[#D4C9A8]/60 fixed top-0 z-50 flex items-center justify-between px-4 md:px-[40px] h-16 w-full"
+      style={{ boxShadow: '0 1px 8px rgba(92, 61, 30, 0.03)' }}>
       <div className="flex items-center gap-4">
         {showMenu && (
           <button className="md:hidden text-primary">
@@ -32,11 +33,14 @@ export default function TopBar({ title, showMenu = false }: TopBarProps) {
       <div className="flex items-center gap-3">
         <button
           onClick={handleSignOut}
-          className="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-[#EDE7D9] transition-all duration-200"
           title="Sign out"
           aria-label="Sign out"
         >
-          <span className="material-symbols-outlined text-[18px] text-on-surface-variant">logout</span>
+          <span className="material-symbols-outlined text-[18px]">logout</span>
+          <span className="hidden md:inline text-[13px] font-semibold" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+            Sign out
+          </span>
         </button>
       </div>
     </header>

@@ -11,20 +11,34 @@ export default async function LandingPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-parchment text-on-surface">
+    <div className="min-h-dvh text-on-surface" style={{
+      background: 'linear-gradient(180deg, #FAF6EF 0%, #F5EFE0 40%, #F0E8D4 100%)',
+    }}>
       {/* Nav */}
       <nav className="flex items-center justify-between px-4 md:px-[40px] h-16 w-full max-w-[800px] mx-auto z-50">
-        <div className="font-headline-lg text-headline-lg text-primary flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary">menu_book</span>
-          <span>The Library</span>
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)' }}>
+            <span className="material-symbols-outlined text-white text-[18px]">menu_book</span>
+          </div>
+          <span className="text-[20px] text-primary font-bold tracking-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+            The Library
+          </span>
         </div>
         <div className="hidden md:flex items-center gap-8">
-          <Link href="/login" className="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors">
+          <Link href="/login" className="text-[13px] text-[#7A7067] font-semibold hover:text-primary transition-colors"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>
             Sign In
           </Link>
           <Link
             href="/signup"
-            className="bg-primary text-surface px-6 py-2 rounded-lg font-label-sm text-label-sm hover:opacity-90 transition-all"
+            className="text-white px-6 py-2.5 rounded-lg text-[13px] font-semibold transition-all hover:opacity-90"
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+              boxShadow: '0 2px 8px rgba(3, 51, 39, 0.2)',
+            }}
           >
             Join Research
           </Link>
@@ -36,83 +50,124 @@ export default async function LandingPage() {
         {/* Hero */}
         <section className="flex flex-col items-center text-center space-y-8 py-16 md:py-24">
           <div className="inline-flex items-center gap-4 text-primary">
-            <h1 className="font-display-lg text-display-lg">The Library</h1>
-            <span className="material-symbols-outlined text-4xl">auto_stories</span>
+            <h1 className="text-[48px] md:text-[56px] font-bold tracking-tight"
+              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+              The Library
+            </h1>
+            <span className="material-symbols-outlined text-4xl opacity-60">auto_stories</span>
           </div>
-          <p className="font-body-lg text-body-lg italic text-on-surface-variant max-w-lg">
-            Your AI-powered study companion. Master anything.
+          <p className="text-[18px] italic text-[#7A7067] max-w-lg"
+            style={{ fontFamily: 'Literata, Georgia, serif', lineHeight: 1.6 }}>
+            Your AI-powered study companion. Master anything through active recall, guided practice, and daily streaks.
           </p>
           <div className="flex flex-col md:flex-row items-center gap-4 pt-4">
             <Link
               href="/signup"
-              className="w-full md:w-auto bg-primary-container text-surface-container-lowest px-10 py-4 rounded-lg font-body-md font-bold transition-all hover:bg-primary shadow-sm"
+              className="w-full md:w-auto text-white px-10 py-4 rounded-xl text-[16px] font-bold transition-all hover:opacity-90"
+              style={{
+                fontFamily: 'Literata, Georgia, serif',
+                background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+                boxShadow: '0 4px 16px rgba(3, 51, 39, 0.25)',
+              }}
             >
               Start Studying
             </Link>
             <Link
               href="#features"
-              className="w-full md:w-auto border border-primary text-primary px-10 py-4 rounded-lg font-body-md font-bold transition-all hover:bg-primary-fixed/20"
+              className="w-full md:w-auto border-2 border-primary text-primary px-10 py-4 rounded-xl text-[16px] font-bold transition-all hover:bg-primary hover:text-white"
+              style={{ fontFamily: 'Literata, Georgia, serif' }}
             >
               See how it works
             </Link>
           </div>
 
-          {/* Hero illustration placeholder */}
-          <div className="mt-16 w-full aspect-video rounded-xl border border-aged-paper overflow-hidden bg-surface-container-low flex items-center justify-center">
+          {/* Hero illustration */}
+          <div className="mt-16 w-full aspect-video rounded-2xl overflow-hidden flex items-center justify-center"
+            style={{
+              background: 'linear-gradient(135deg, #F9F3E3 0%, #EDE7D9 100%)',
+              border: '1px solid #D4C9A8',
+              boxShadow: '0 8px 32px rgba(92, 61, 30, 0.08)',
+            }}>
             <div className="text-center space-y-4 p-12">
-              <span className="material-symbols-outlined text-primary text-[64px]">local_library</span>
-              <p className="font-headline-md text-headline-md text-primary">A sanctuary for the modern scholar.</p>
+              <span className="material-symbols-outlined text-primary text-[64px] opacity-40">local_library</span>
+              <p className="text-[22px] text-primary font-semibold"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                A sanctuary for the modern scholar.
+              </p>
             </div>
           </div>
         </section>
 
         {/* Feature Grid */}
-        <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
-          <div className="bg-surface-container-lowest border border-aged-paper rounded-xl p-8 flex flex-col items-start space-y-4 hover:bg-white transition-colors">
-            <div className="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary">grid_view</span>
+        <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-12">
+          {[
+            {
+              icon: 'grid_view',
+              title: '4 Study Modes',
+              desc: 'From active recall flashcards to deep-dive Socratic dialogues. Switch between Peer, Tutor, Examiner, and Feynman modes.',
+              gradient: 'linear-gradient(135deg, rgba(3,51,39,0.08) 0%, rgba(3,51,39,0.02) 100%)',
+            },
+            {
+              icon: 'format_quote',
+              title: 'Your Notes, Cited',
+              desc: 'Every AI insight links directly to your source material. Keep your archive rigorous and your memory sharp.',
+              gradient: 'linear-gradient(135deg, rgba(123,88,0,0.08) 0%, rgba(123,88,0,0.02) 100%)',
+            },
+            {
+              icon: 'local_florist',
+              title: 'Daily Book Streak',
+              desc: 'Watch your virtual bookshelf grow as you study daily. Visual progress through your personal knowledge archive.',
+              gradient: 'linear-gradient(135deg, rgba(31,74,61,0.08) 0%, rgba(31,74,61,0.02) 100%)',
+            },
+          ].map((feature) => (
+            <div key={feature.title} className="card-hover rounded-2xl p-8 flex flex-col items-start space-y-4"
+              style={{
+                background: '#FDFBF7',
+                border: '1px solid #D4C9A8',
+                boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)',
+              }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                style={{ background: feature.gradient }}>
+                <span className="material-symbols-outlined text-primary text-[24px]">{feature.icon}</span>
+              </div>
+              <h3 className="text-[20px] text-primary font-semibold"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                {feature.title}
+              </h3>
+              <p className="text-[14px] text-[#7A7067] leading-relaxed"
+                style={{ fontFamily: 'Literata, Georgia, serif' }}>
+                {feature.desc}
+              </p>
             </div>
-            <h3 className="font-headline-md text-headline-md text-primary">4 Study Modes</h3>
-            <p className="font-body-md text-on-surface-variant">
-              From active recall flashcards to deep-dive Socratic dialogues. Switch between Peer, Tutor, Examiner, and Feynman modes.
-            </p>
-          </div>
-
-          <div className="bg-surface-container-lowest border border-aged-paper rounded-xl p-8 flex flex-col items-start space-y-4 hover:bg-white transition-colors">
-            <div className="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center">
-              <span className="material-symbols-outlined text-secondary">format_quote</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md text-primary">Your Notes, Cited</h3>
-            <p className="font-body-md text-on-surface-variant">
-              Every AI insight links directly to your source material. Keep your archive rigorous and your memory sharp.
-            </p>
-          </div>
-
-          <div className="bg-surface-container-lowest border border-aged-paper rounded-xl p-8 flex flex-col items-start space-y-4 hover:bg-white transition-colors">
-            <div className="w-12 h-12 rounded-full bg-surface-tint/20 flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary">local_florist</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md text-primary">Daily Garden Streak</h3>
-            <p className="font-body-md text-on-surface-variant">
-              Watch your digital garden grow as you review concepts. Visual progress through your personal knowledge archive.
-            </p>
-          </div>
+          ))}
         </section>
 
         {/* Divider */}
-        <div className="py-20 flex justify-center opacity-30">
-          <div className="w-1/2 border-t border-aged-paper"></div>
+        <div className="py-20 ornamental-divider">
+          <span className="material-symbols-outlined text-[#D4C9A8] text-[16px]">auto_stories</span>
         </div>
 
         {/* CTA */}
-        <section className="bg-primary p-12 rounded-xl text-center flex flex-col items-center space-y-6">
-          <h2 className="font-headline-lg text-headline-lg text-surface-container-lowest">Ready to Curate Your Mind?</h2>
-          <p className="font-body-lg text-primary-fixed-dim max-w-md italic">
+        <section className="p-12 rounded-2xl text-center flex flex-col items-center space-y-6"
+          style={{
+            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
+            boxShadow: '0 8px 32px rgba(3, 51, 39, 0.25)',
+          }}>
+          <h2 className="text-[28px] text-white font-bold"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+            Ready to Curate Your Mind?
+          </h2>
+          <p className="text-[16px] text-[#8CB9A8] max-w-md italic"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>
             Join scholars building their personal archives of knowledge.
           </p>
           <Link
             href="/signup"
-            className="bg-secondary-fixed text-on-secondary-fixed px-12 py-3 rounded-lg font-label-sm text-label-sm font-bold uppercase tracking-widest hover:brightness-110 transition-all"
+            className="bg-[#C8A472] text-[#1A1A1A] px-12 py-3.5 rounded-xl text-[13px] font-bold uppercase tracking-[0.15em] hover:brightness-110 transition-all"
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              boxShadow: '0 2px 8px rgba(200, 164, 114, 0.3)',
+            }}
           >
             Create Account
           </Link>
@@ -120,22 +175,28 @@ export default async function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-parchment border-t border-aged-paper py-12 px-4 md:px-[40px]">
+      <footer className="w-full border-t border-[#D4C9A8] py-12 px-4 md:px-[40px]"
+        style={{ background: 'linear-gradient(180deg, #F5EFE0 0%, #EDE7D9 100%)' }}>
         <div className="max-w-[800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start space-y-2">
-            <div className="font-headline-md text-primary flex items-center gap-2">
-              <span className="material-symbols-outlined">menu_book</span>
-              <span>The Library</span>
+            <div className="flex items-center gap-2 text-primary">
+              <span className="material-symbols-outlined text-[20px]">menu_book</span>
+              <span className="font-bold text-[16px]" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                The Library
+              </span>
             </div>
-            <p className="font-body-md text-on-surface-variant italic">A sanctuary for the modern scholar.</p>
+            <p className="text-[14px] text-[#7A7067] italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+              A sanctuary for the modern scholar.
+            </p>
           </div>
-          <div className="flex gap-12 font-label-sm text-label-sm text-on-surface-variant">
+          <div className="flex gap-12 text-[13px] text-[#7A7067] font-semibold"
+            style={{ fontFamily: 'Literata, Georgia, serif' }}>
             <a href="#" className="hover:text-primary transition-colors">Manifesto</a>
             <a href="#" className="hover:text-primary transition-colors">Archive</a>
             <a href="#" className="hover:text-primary transition-colors">Privacy</a>
           </div>
-          <div className="text-on-surface-variant font-label-sm text-label-sm">
-            © 1892–2025 The Library Project.
+          <div className="text-[#A09888] text-[12px]" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+            &copy; 1892-2025 The Library Project.
           </div>
         </div>
       </footer>
