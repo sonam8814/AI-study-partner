@@ -1,6 +1,6 @@
 'use client'
 import WeakSpotItem from './WeakSpotItem'
-import type { WeakSpot } from '@/types/garden'
+import type { WeakSpot } from '@/types/bookshelf'
 
 interface WeakSpotsListProps {
   spots: WeakSpot[]

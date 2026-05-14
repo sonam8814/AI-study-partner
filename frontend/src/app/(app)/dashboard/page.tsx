@@ -1,17 +1,17 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import DigitalGarden from '@/components/garden/DigitalGarden'
+import Bookshelf from '@/components/bookshelf/Bookshelf'
 import Spinner from '@/components/ui/Spinner'
 import { api } from '@/lib/api'
 import { createClient } from '@/lib/supabase/client'
-import type { GardenStats, WeakSpot } from '@/types/garden'
+import type { BookshelfStats, WeakSpot } from '@/types/bookshelf'
 import type { Material } from '@/types/material'
 import type { PaginatedResponse } from '@/types/api'
 import { toast } from 'react-hot-toast'
 
 export default function DashboardPage() {
-  const [gardenStats, setGardenStats] = useState<GardenStats | null>(null)
+  const [bookshelfStats, setBookshelfStats] = useState<BookshelfStats | null>(null)
   const [weakSpots, setWeakSpots] = useState<WeakSpot[]>([])
   const [recentMaterials, setRecentMaterials] = useState<Material[]>([])
   const [displayName, setDisplayName] = useState('Scholar')
@@ -31,13 +31,13 @@ export default function DashboardPage() {
     }
 
     try {
-      const [garden, spots, materials] = await Promise.allSettled([
-        api<GardenStats>('/garden'),
+      const [bookshelf, spots, materials] = await Promise.allSettled([
+        api<BookshelfStats>('/bookshelf'),
         api<PaginatedResponse<WeakSpot>>('/weakspots?resolved=false&limit=5'),
         api<PaginatedResponse<Material>>('/materials?limit=4'),
       ])
 
-      if (garden.status === 'fulfilled') setGardenStats(garden.value)
+      if (bookshelf.status === 'fulfilled') setBookshelfStats(bookshelf.value)
       if (spots.status === 'fulfilled') setWeakSpots(spots.value.items)
       if (materials.status === 'fulfilled') setRecentMaterials(materials.value.items)
     } catch {
@@ -93,7 +93,7 @@ export default function DashboardPage() {
       {/* Stats row */}
       <section className="mb-10 overflow-x-auto hide-scrollbar -mx-4 px-4">
         <div className="flex space-x-4 min-w-max pb-2">
-          {gardenStats && (
+          {bookshelfStats && (
             <>
               <div className="stat-card rounded-xl p-5 w-44 flex flex-col justify-between"
                 style={{
@@ -107,7 +107,7 @@ export default function DashboardPage() {
                 <div className="flex items-end gap-1.5 mt-4">
                   <span className="text-[36px] text-white font-bold leading-none"
                     style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-                    {gardenStats.current_streak}
+                    {bookshelfStats.current_streak}
                   </span>
                   <span className="text-[20px] mb-1">&#128293;</span>
                 </div>
@@ -125,7 +125,7 @@ export default function DashboardPage() {
                 <div className="mt-4">
                   <span className="text-[36px] text-primary font-bold leading-none"
                     style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-                    {gardenStats.total_minutes_studied}
+                    {bookshelfStats.total_minutes_studied}
                   </span>
                   <span className="text-[12px] text-[#7A7067] ml-1.5 font-semibold">min</span>
                 </div>
@@ -162,8 +162,8 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Digital Garden / Bookshelf */}
-      {gardenStats && <DigitalGarden stats={gardenStats} />}
+      {/* Bookshelf */}
+      {bookshelfStats && <Bookshelf stats={bookshelfStats} />}
 
       {/* Weak Spots + Recent Materials */}
       <section className="space-y-6">

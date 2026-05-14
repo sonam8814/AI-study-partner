@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import type { WeakSpot } from '@/types/garden'
+import type { WeakSpot } from '@/types/bookshelf'
 import { formatRelative } from '@/lib/utils'
 
 interface WeakSpotItemProps {

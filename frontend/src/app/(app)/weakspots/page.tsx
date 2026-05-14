@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import WeakSpotItem from '@/components/weakspots/WeakSpotItem'
 import Spinner from '@/components/ui/Spinner'
 import { api } from '@/lib/api'
-import type { WeakSpot } from '@/types/garden'
+import type { WeakSpot } from '@/types/bookshelf'
 import type { PaginatedResponse } from '@/types/api'
 import { toast } from 'react-hot-toast'
 

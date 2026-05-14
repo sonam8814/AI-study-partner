@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { api } from '@/lib/api'
-import type { GardenStats } from '@/types/garden'
+import type { BookshelfStats } from '@/types/bookshelf'
 
 interface RecordDayResult {
   current_streak: number
@@ -13,7 +13,7 @@ interface RecordDayResult {
 export function useStreak() {
   const recordStudyDay = useCallback(async (minutesStudied: number): Promise<RecordDayResult | null> => {
     try {
-      return await api<RecordDayResult>('/garden/record', {
+      return await api<RecordDayResult>('/bookshelf/record', {
         method: 'POST',
         body: JSON.stringify({ minutes_studied: minutesStudied }),
       })
@@ -22,13 +22,13 @@ export function useStreak() {
     }
   }, [])
 
-  const getGardenStats = useCallback(async (): Promise<GardenStats | null> => {
+  const getBookshelfStats = useCallback(async (): Promise<BookshelfStats | null> => {
     try {
-      return await api<GardenStats>('/garden')
+      return await api<BookshelfStats>('/bookshelf')
     } catch {
       return null
     }
   }, [])
 
-  return { recordStudyDay, getGardenStats }
+  return { recordStudyDay, getBookshelfStats }
 }

@@ -17,7 +17,7 @@ export const MODE_DESCRIPTIONS: Record<Mode, string> = {
   feynman: 'Explain concepts in simple terms',
 }
 
-export const GARDEN_STAGE_LABELS = [
+export const BOOKSHELF_STAGE_LABELS = [
   'Seed',
   'Sprout',
   'Sapling',
@@ -26,9 +26,9 @@ export const GARDEN_STAGE_LABELS = [
 ] as const
 
 export const PLANT_STAGE_FILES = [
-  '/garden-stages/stage-0-seed.svg',
-  '/garden-stages/stage-1-sprout.svg',
-  '/garden-stages/stage-2-sapling.svg',
-  '/garden-stages/stage-3-bloom.svg',
-  '/garden-stages/stage-4-tree.svg',
+  '/bookshelf-stages/stage-0-seed.svg',
+  '/bookshelf-stages/stage-1-sprout.svg',
+  '/bookshelf-stages/stage-2-sapling.svg',
+  '/bookshelf-stages/stage-3-bloom.svg',
+  '/bookshelf-stages/stage-4-tree.svg',
 ] as const

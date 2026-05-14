@@ -128,9 +128,9 @@ class WeakSpotListResponse(BaseModel):
     total: int
 
 
-# ── Garden ─────────────────────────────────────────────────────────────────────
+# ── Bookshelf ──────────────────────────────────────────────────────────────────
 
-class GardenStats(BaseModel):
+class BookshelfStats(BaseModel):
     user_id: UUID
     current_streak: int
     longest_streak: int
@@ -144,11 +144,11 @@ class GardenStats(BaseModel):
     updated_at: datetime
 
 
-class GardenRecordRequest(BaseModel):
+class BookshelfRecordRequest(BaseModel):
     minutes_studied: int = Field(default=0, ge=0)
 
 
-class GardenRecordResponse(BaseModel):
+class BookshelfRecordResponse(BaseModel):
     current_streak: int
     longest_streak: int
     current_plant_stage: int

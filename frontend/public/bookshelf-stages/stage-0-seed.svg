@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Soil -->
+  <ellipse cx="32" cy="54" rx="20" ry="6" fill="#8B6340"/>
+  <ellipse cx="32" cy="53" rx="18" ry="5" fill="#A0744E"/>
+  <!-- Seed -->
+  <ellipse cx="32" cy="48" rx="5" ry="3.5" fill="#C4A265" transform="rotate(-15 32 48)"/>
+  <path d="M32 46.5c0-1 .8-2 2-2.5" stroke="#8B6340" stroke-width="0.8" fill="none"/>
+</svg>
