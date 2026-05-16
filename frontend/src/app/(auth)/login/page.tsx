@@ -35,22 +35,22 @@ export default function LoginPage() {
   return (
     <main className="w-full max-w-[440px]">
       <div className="rounded-2xl p-8 md:p-12" style={{
-        background: 'linear-gradient(180deg, #F9F3E3 0%, #F0E8D4 100%)',
-        border: '1px solid #C8B88A',
-        boxShadow: '0 8px 40px rgba(92, 61, 30, 0.1), 0 2px 8px rgba(92, 61, 30, 0.05)',
+        background: `linear-gradient(180deg, var(--color-parchment-start) 0%, var(--color-parchment-end) 100%)`,
+        border: '1px solid var(--color-gilt-border)',
+        boxShadow: 'var(--shadow-lg)',
       }}>
         {/* Logo */}
         <div className="text-center mb-10">
           <div className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)' }}>
-            <span className="material-symbols-outlined text-white text-[28px]">menu_book</span>
+            style={{ background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)` }}>
+            <span className="material-symbols-outlined text-[28px]" style={{ color: 'var(--color-on-primary)' }}>menu_book</span>
           </div>
           <h1 className="text-[28px] text-primary tracking-tight font-bold"
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
             The Library
           </h1>
-          <p className="text-[12px] text-[#7A7067] mt-2 tracking-[0.15em] uppercase font-semibold"
-            style={{ fontFamily: 'Literata, Georgia, serif' }}>
+          <p className="text-[12px] mt-2 tracking-[0.15em] uppercase font-semibold"
+            style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
             Private Archive &amp; Reading Room
           </p>
         </div>
@@ -58,8 +58,8 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-7">
           <div className="flex flex-col">
-            <label className="text-[12px] text-[#7A7067] mb-1.5 font-semibold tracking-wide"
-              style={{ fontFamily: 'Literata, Georgia, serif' }} htmlFor="email">
+            <label className="text-[12px] mb-1.5 font-semibold tracking-wide"
+              style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }} htmlFor="email">
               Email Address
             </label>
             <input
@@ -75,8 +75,8 @@ export default function LoginPage() {
 
           <div className="flex flex-col">
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-[12px] text-[#7A7067] font-semibold tracking-wide"
-                style={{ fontFamily: 'Literata, Georgia, serif' }} htmlFor="password">
+              <label className="text-[12px] font-semibold tracking-wide"
+                style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }} htmlFor="password">
                 Password
               </label>
               <a href="#" className="text-[12px] text-secondary font-semibold hover:underline"
@@ -101,8 +101,8 @@ export default function LoginPage() {
             className="w-full text-white text-[14px] font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 hover:opacity-90"
             style={{
               fontFamily: 'Literata, Georgia, serif',
-              background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-              boxShadow: '0 4px 12px rgba(3, 51, 39, 0.2)',
+              background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+              boxShadow: 'var(--shadow-primary)',
             }}
           >
             {loading ? 'Signing in...' : 'Sign in to Archive'}
@@ -112,10 +112,10 @@ export default function LoginPage() {
         {/* Divider */}
         <div className="relative my-8 flex items-center justify-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#D4C9A8]"></div>
+            <div className="w-full" style={{ borderTop: '1px solid var(--color-border)' }}></div>
           </div>
-          <div className="relative px-4 text-[#7A7067] text-[13px] italic"
-            style={{ fontFamily: 'Literata, Georgia, serif', background: 'linear-gradient(180deg, #F5F0E4 0%, #F0E8D4 100%)' }}>
+          <div className="relative px-4 text-[13px] italic"
+            style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)', background: `linear-gradient(180deg, var(--color-or-divider-start) 0%, var(--color-or-divider-end) 100%)` }}>
             or
           </div>
         </div>
@@ -124,11 +124,15 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleGoogle}
-          className="w-full bg-white border border-[#D4C9A8] text-on-surface text-[14px] font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-3 hover:bg-[#F9F5EC] hover:border-primary"
+          className="w-full text-on-surface text-[14px] font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-3"
           style={{
             fontFamily: 'Literata, Georgia, serif',
-            boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)',
+            background: 'var(--color-input-bg)',
+            border: '1px solid var(--color-border)',
+            boxShadow: 'var(--shadow-sm)',
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-surface-elevated-end)'; e.currentTarget.style.borderColor = 'var(--color-primary)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-input-bg)'; e.currentTarget.style.borderColor = 'var(--color-border)' }}
         >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
@@ -141,7 +145,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="mt-10 text-center">
-          <p className="text-[14px] text-[#7A7067]" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+          <p className="text-[14px]" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-secondary font-bold hover:underline">
               Sign up
@@ -153,12 +157,12 @@ export default function LoginPage() {
       {/* System footer */}
       <div className="mt-8 flex justify-between items-center px-4">
         <div className="flex gap-4">
-          <a href="#" className="text-[12px] text-[#A09888] hover:text-primary transition-colors"
-            style={{ fontFamily: 'Literata, Georgia, serif' }}>Privacy</a>
-          <a href="#" className="text-[12px] text-[#A09888] hover:text-primary transition-colors"
-            style={{ fontFamily: 'Literata, Georgia, serif' }}>Terms</a>
+          <a href="#" className="text-[12px] hover:text-primary transition-colors"
+            style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-faint)' }}>Privacy</a>
+          <a href="#" className="text-[12px] hover:text-primary transition-colors"
+            style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-faint)' }}>Terms</a>
         </div>
-        <div className="flex items-center text-[#A09888] gap-1.5">
+        <div className="flex items-center gap-1.5" style={{ color: 'var(--color-text-faint)' }}>
           <span className="material-symbols-outlined text-[14px]">menu_book</span>
           <span className="text-[11px]" style={{ fontFamily: 'Literata, Georgia, serif' }}>Established 1894</span>
         </div>

@@ -33,6 +33,7 @@ export function useStudySession(materialId: string) {
       const minutes = getElapsedMinutes()
       lastRecordedMinutes.current = minutes
       recordStudyDay(minutes)
+      return
     } else {
       const delay = Math.ceil((60 - elapsed) * 1000)
       const timer = setTimeout(() => {

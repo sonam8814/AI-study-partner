@@ -58,8 +58,8 @@ export default function LibraryPage() {
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
             My Library
           </h2>
-          <p className="text-[#7A7067] font-body-md mt-1 italic"
-            style={{ fontFamily: 'Literata, Georgia, serif' }}>
+          <p className="font-body-md mt-1 italic"
+            style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
             A personal archive of your gathered knowledge and manuscripts.
           </p>
         </div>
@@ -67,8 +67,8 @@ export default function LibraryPage() {
           href="/library/new"
           className="flex items-center gap-2 text-white px-6 py-3 rounded-lg font-label-sm transition-all hover:opacity-90 self-start"
           style={{
-            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-            boxShadow: '0 4px 12px rgba(3, 51, 39, 0.2)',
+            background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+            boxShadow: 'var(--shadow-primary)',
           }}
         >
           <span className="material-symbols-outlined text-[20px]">add</span>
@@ -78,13 +78,19 @@ export default function LibraryPage() {
 
       {/* Search */}
       <div className="relative mb-8 group">
-        <span className="material-symbols-outlined absolute left-0 bottom-3 text-[#A09888]">search</span>
+        <span className="material-symbols-outlined absolute left-0 bottom-3" style={{ color: 'var(--color-text-faint)' }}>search</span>
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search your materials..."
-          className="w-full bg-transparent border-t-0 border-x-0 border-b border-[#D4C9A8] py-3 pl-8 focus:ring-0 focus:border-secondary transition-colors font-body-lg placeholder:text-[#C0B8A8] outline-none"
+          className="w-full bg-transparent border-t-0 border-x-0 py-3 pl-8 focus:ring-0 transition-colors font-body-lg outline-none"
+          style={{
+            borderBottom: '1px solid var(--color-border)',
+            color: 'var(--color-on-surface)',
+          }}
+          onFocus={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-secondary)'}
+          onBlur={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-border)'}
         />
       </div>
 
@@ -96,9 +102,14 @@ export default function LibraryPage() {
             className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 ${
               !selectedTag
                 ? 'bg-primary text-white shadow-sm'
-                : 'border border-[#D4C9A8] text-[#7A7067] hover:bg-[#EDE7D9] hover:text-primary'
+                : ''
             }`}
-            style={{ fontFamily: 'Literata, Georgia, serif' }}
+            style={{
+              fontFamily: 'Literata, Georgia, serif',
+              ...(!selectedTag ? {} : { border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }),
+            }}
+            onMouseEnter={(e) => { if (selectedTag) { e.currentTarget.style.background = 'var(--color-hover-bg)'; e.currentTarget.style.color = 'var(--color-primary)' } }}
+            onMouseLeave={(e) => { if (selectedTag) { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--color-text-muted)' } }}
           >
             All Volumes
           </button>
@@ -109,9 +120,14 @@ export default function LibraryPage() {
               className={`px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 ${
                 selectedTag === tag
                   ? 'bg-primary text-white shadow-sm'
-                  : 'border border-[#D4C9A8] text-[#7A7067] hover:bg-[#EDE7D9] hover:text-primary'
+                  : ''
               }`}
-              style={{ fontFamily: 'Literata, Georgia, serif' }}
+              style={{
+                fontFamily: 'Literata, Georgia, serif',
+                ...(selectedTag !== tag ? { border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' } : {}),
+              }}
+              onMouseEnter={(e) => { if (selectedTag !== tag) { e.currentTarget.style.background = 'var(--color-hover-bg)'; e.currentTarget.style.color = 'var(--color-primary)' } }}
+              onMouseLeave={(e) => { if (selectedTag !== tag) { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--color-text-muted)' } }}
             >
               {tag}
             </button>
@@ -133,15 +149,15 @@ export default function LibraryPage() {
       ) : (
         <div className="mt-12 flex flex-col items-center text-center px-6 py-20 rounded-xl"
           style={{
-            border: '2px dashed #D4C9A8',
-            background: 'linear-gradient(180deg, #FDFBF7 0%, #F9F5EC 100%)',
+            border: '2px dashed var(--color-border)',
+            background: `linear-gradient(180deg, var(--color-surface-elevated) 0%, var(--color-surface-elevated-end) 100%)`,
           }}>
           <div className="mb-6 opacity-40">
             <span className="material-symbols-outlined text-primary text-[72px]">auto_stories</span>
           </div>
           <h3 style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
             className="text-[22px] text-on-surface mb-2 font-semibold">Your library is empty</h3>
-          <p className="text-[#7A7067] max-w-sm mb-8 italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+          <p className="max-w-sm mb-8 italic" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
             Begin your scholarly journey by adding your first manuscript or lecture notes.
           </p>
           <Link

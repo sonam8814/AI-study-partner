@@ -144,7 +144,7 @@ const NotesPanel = forwardRef<NotesPanelRef, NotesPanelProps>(function NotesPane
 
   return (
     <aside className="h-full overflow-y-auto custom-scrollbar" style={{
-      background: 'linear-gradient(180deg, #FDFBF7 0%, #F9F5EC 100%)',
+      background: `linear-gradient(180deg, var(--color-surface-elevated) 0%, var(--color-surface-elevated-end) 100%)`,
     }}>
       <div className="p-6 md:p-8">
         <div className="flex items-center justify-between mb-6">
@@ -154,7 +154,10 @@ const NotesPanel = forwardRef<NotesPanelRef, NotesPanelProps>(function NotesPane
           </h3>
           <a
             href={`/materials/${material.id}`}
-            className="text-[#7A7067] hover:text-primary hover:bg-[#EDE7D9] p-1.5 rounded-lg transition-all duration-200"
+            className="p-1.5 rounded-lg transition-all duration-200"
+            style={{ color: 'var(--color-text-muted)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.background = 'var(--color-hover-bg)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.background = '' }}
             title="Edit notes"
           >
             <span className="material-symbols-outlined text-[20px]">edit_note</span>
@@ -173,7 +176,7 @@ const NotesPanel = forwardRef<NotesPanelRef, NotesPanelProps>(function NotesPane
         ) : (
           <div className="text-center py-12">
             <span className="material-symbols-outlined text-[48px] mb-3 block opacity-25 text-primary">description</span>
-            <p className="text-[#7A7067] italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>Notes are empty.</p>
+            <p className="italic" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>Notes are empty.</p>
             <a
               href={`/materials/${material.id}`}
               className="mt-4 inline-block text-primary text-[13px] font-semibold hover:underline"

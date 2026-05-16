@@ -22,9 +22,9 @@ export default function Button({
         'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
         {
           'text-white hover:opacity-90 active:scale-[0.98]': variant === 'primary',
-          'bg-[#C8A472] text-[#1A1A1A] hover:brightness-110 active:scale-[0.98]': variant === 'secondary',
+          'text-on-surface hover:brightness-110 active:scale-[0.98]': variant === 'secondary',
           'border-2 border-primary text-primary hover:bg-primary hover:text-white': variant === 'outline',
-          'text-primary hover:bg-[#EDE7D9]': variant === 'ghost',
+          'text-primary': variant === 'ghost',
         },
         {
           'px-3 py-1.5 text-[12px]': size === 'sm',
@@ -36,10 +36,22 @@ export default function Button({
       style={{
         fontFamily: 'Literata, Georgia, serif',
         ...(variant === 'primary' ? {
-          background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-          boxShadow: '0 2px 8px rgba(3, 51, 39, 0.2)',
+          background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+          boxShadow: 'var(--shadow-primary)',
+        } : {}),
+        ...(variant === 'secondary' ? {
+          background: `var(--color-gilt)`,
+        } : {}),
+        ...(variant === 'ghost' ? {
+          background: 'transparent',
         } : {}),
         ...style,
+      }}
+      onMouseEnter={(e) => {
+        if (variant === 'ghost') e.currentTarget.style.background = 'var(--color-hover-bg)'
+      }}
+      onMouseLeave={(e) => {
+        if (variant === 'ghost') e.currentTarget.style.background = 'transparent'
       }}
       {...props}
     >

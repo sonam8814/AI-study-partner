@@ -5,11 +5,321 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Literata:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
+/* ─── Light Theme (default) ─── */
 :root {
   --font-playfair: 'Playfair Display', Georgia, serif;
   --font-literata: 'Literata', Georgia, serif;
   --font-lora: 'Lora', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Surfaces */
+  --color-background: #fcf9f8;
+  --color-surface: #fcf9f8;
+  --color-surface-dim: #dcd9d9;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-elevated: #FDFBF7;
+  --color-surface-elevated-end: #F9F5EC;
+
+  /* Parchment / card surfaces */
+  --color-parchment: #FAF6EF;
+  --color-parchment-start: #F9F3E3;
+  --color-parchment-end: #F0E8D4;
+  --color-sidebar-start: #F9F5EC;
+  --color-sidebar-end: #F3EDE0;
+  --color-input-area-start: #F9F5EC;
+  --color-input-area-end: #F3EDE0;
+  --color-footer-start: #F5EFE0;
+  --color-footer-end: #EDE7D9;
+  --color-landing-start: #FAF6EF;
+  --color-landing-mid: #F5EFE0;
+  --color-landing-end: #F0E8D4;
+  --color-auth-start: #FAF6EF;
+  --color-auth-mid: #F0E8D4;
+  --color-auth-end: #EDE7D9;
+  --color-or-divider-start: #F5F0E4;
+  --color-or-divider-end: #F0E8D4;
+
+  /* Text */
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #414845;
+  --color-text-muted: #7A7067;
+  --color-text-faint: #A09888;
+
+  /* Primary */
+  --color-primary: #033327;
+  --color-primary-light: #1F4A3D;
+  --color-primary-container: #1f4a3d;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #8cb9a8;
+  --color-inverse-primary: #a3d0bf;
+  --color-primary-fixed: #beecda;
+
+  /* Secondary (gilt gold) */
+  --color-secondary: #7b5800;
+  --color-secondary-container: #fdc34d;
+  --color-on-secondary-container: #715000;
+  --color-gilt: #C8A472;
+  --color-gilt-border: #C8B88A;
+
+  /* Borders */
+  --color-border: #D4C9A8;
+  --color-border-light: rgba(212, 201, 168, 0.6);
+  --color-outline: #717975;
+  --color-outline-variant: #c0c8c3;
+
+  /* Aged / decorative */
+  --color-aged-paper: #D4C9A8;
+  --color-hover-bg: #EDE7D9;
+
+  /* Error */
+  --color-error: #C62828;
+  --color-error-bg-start: #FFF5F5;
+  --color-error-bg-end: #FFE8E8;
+  --color-error-border: #FFCDD2;
+  --color-error-badge-bg: #FFEBEE;
+
+  /* Weak spots card */
+  --color-weakspot-bg-start: #FFFBF5;
+  --color-weakspot-bg-end: #FFF8EE;
+  --color-weakspot-border: #E8D5B0;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(92, 61, 30, 0.04);
+  --shadow-md: 0 4px 16px rgba(92, 61, 30, 0.06);
+  --shadow-lg: 0 8px 32px rgba(92, 61, 30, 0.08);
+  --shadow-primary: 0 2px 8px rgba(3, 51, 39, 0.2);
+  --shadow-primary-lg: 0 4px 16px rgba(3, 51, 39, 0.25);
+  --shadow-card-hover: 0 8px 24px rgba(92, 61, 30, 0.08), 0 2px 8px rgba(92, 61, 30, 0.04);
+  --shadow-gilt: 0 2px 8px rgba(200, 164, 114, 0.3);
+  --shadow-soft: 0 1px 8px rgba(92, 61, 30, 0.03);
+  --shadow-sidebar: 2px 0 16px rgba(92, 61, 30, 0.04);
+  --shadow-bottom-nav: 0 -2px 12px rgba(92, 61, 30, 0.04);
+  --shadow-stat: 0 2px 12px rgba(92, 61, 30, 0.06);
+
+  /* Glass */
+  --glass-bg: rgba(252, 249, 248, 0.85);
+
+  /* White (for cards on dark) */
+  --color-white: #ffffff;
+  --color-input-bg: #ffffff;
+
+  /* Feature card gradients */
+  --feature-green: rgba(3, 51, 39, 0.08);
+  --feature-green-end: rgba(3, 51, 39, 0.02);
+  --feature-gold: rgba(123, 88, 0, 0.08);
+  --feature-gold-end: rgba(123, 88, 0, 0.02);
+  --feature-teal: rgba(31, 74, 61, 0.08);
+  --feature-teal-end: rgba(31, 74, 61, 0.02);
+
+  /* Chat empty state icon bg */
+  --chat-empty-bg-start: rgba(3, 51, 39, 0.06);
+  --chat-empty-bg-end: rgba(3, 51, 39, 0.02);
+
+  /* Disabled send button */
+  --color-disabled-bg: #E5E2E1;
+  --color-disabled-text: #A09888;
+
+  /* Placeholder */
+  --color-placeholder: #C0B8A8;
+
+  /* Scrollbar */
+  --color-scrollbar: #D4C9A8;
+  --color-scrollbar-hover: #b8a888;
+
+  /* Parchment texture */
+  --parchment-bg: #fcf9f8;
+  --parchment-radial: rgba(245, 239, 224, 0.5);
+  --parchment-dots: #dcd9d9;
+
+  /* Waveform */
+  --color-waveform: #033327;
+
+  /* Stat shimmer */
+  --stat-shimmer: rgba(255, 255, 255, 0.05);
+
+  /* Book spine in material cards */
+  --book-spine-start: #1F4A3D;
+  --book-spine-end: #033327;
+  --book-spine-icon: #8CB9A8;
+
+  /* Prose */
+  --prose-heading: #033327;
+  --prose-text: #1c1b1b;
+  --prose-code-bg: #f0eded;
+  --prose-blockquote-border: #D4C9A8;
+  --prose-blockquote-text: #414845;
+
+  /* Streaming cursor */
+  --streaming-cursor: #033327;
+
+  /* Citation */
+  --citation-color: #7b5800;
+  --citation-hover: #a07200;
+  --citation-highlight-bg: rgba(184, 134, 11, 0.15);
+
+  /* Toast */
+  --toast-bg-start: #F9F3E3;
+  --toast-bg-end: #F0E8D4;
+  --toast-text: #1c1b1b;
+  --toast-border: #C8B88A;
+}
+
+/* ─── Dark Theme ─── */
+.dark {
+  /* Surfaces */
+  --color-background: #141416;
+  --color-surface: #141416;
+  --color-surface-dim: #2a2a2e;
+  --color-surface-container-low: #1e1e22;
+  --color-surface-container: #232328;
+  --color-surface-container-high: #2a2a30;
+  --color-surface-elevated: #1e1e22;
+  --color-surface-elevated-end: #232328;
+
+  /* Parchment / card surfaces */
+  --color-parchment: #1a1a1e;
+  --color-parchment-start: #1e1e24;
+  --color-parchment-end: #1a1a20;
+  --color-sidebar-start: #1a1a1e;
+  --color-sidebar-end: #16161a;
+  --color-input-area-start: #1a1a1e;
+  --color-input-area-end: #16161a;
+  --color-footer-start: #1a1a1e;
+  --color-footer-end: #141416;
+  --color-landing-start: #141416;
+  --color-landing-mid: #1a1a1e;
+  --color-landing-end: #16161a;
+  --color-auth-start: #141416;
+  --color-auth-mid: #1a1a1e;
+  --color-auth-end: #16161a;
+  --color-or-divider-start: #1e1e24;
+  --color-or-divider-end: #1a1a20;
+
+  /* Text */
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #b0b8b4;
+  --color-text-muted: #9a9490;
+  --color-text-faint: #706a64;
+
+  /* Primary */
+  --color-primary: #a3d0bf;
+  --color-primary-light: #8cb9a8;
+  --color-primary-container: #244e41;
+  --color-on-primary: #00382b;
+  --color-on-primary-container: #beecda;
+  --color-inverse-primary: #033327;
+  --color-primary-fixed: #244e41;
+
+  /* Secondary (gilt gold) */
+  --color-secondary: #fdc34d;
+  --color-secondary-container: #5d4200;
+  --color-on-secondary-container: #ffdea6;
+  --color-gilt: #d4a54a;
+  --color-gilt-border: #5d4200;
+
+  /* Borders */
+  --color-border: #3a3a3e;
+  --color-border-light: rgba(58, 58, 62, 0.6);
+  --color-outline: #8a9088;
+  --color-outline-variant: #444a47;
+
+  /* Aged / decorative */
+  --color-aged-paper: #3a3a3e;
+  --color-hover-bg: #2a2a30;
+
+  /* Error */
+  --color-error: #ff6b6b;
+  --color-error-bg-start: #2a1a1a;
+  --color-error-bg-end: #261616;
+  --color-error-border: #4a2020;
+  --color-error-badge-bg: #3a1a1a;
+
+  /* Weak spots card */
+  --color-weakspot-bg-start: #1e1c18;
+  --color-weakspot-bg-end: #1a1816;
+  --color-weakspot-border: #3a3428;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-primary: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-primary-lg: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-gilt: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-soft: 0 1px 8px rgba(0, 0, 0, 0.15);
+  --shadow-sidebar: 2px 0 16px rgba(0, 0, 0, 0.2);
+  --shadow-bottom-nav: 0 -2px 12px rgba(0, 0, 0, 0.2);
+  --shadow-stat: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+  /* Glass */
+  --glass-bg: rgba(20, 20, 22, 0.85);
+
+  /* White (for cards on dark) */
+  --color-white: #e5e2e1;
+  --color-input-bg: #1e1e22;
+
+  /* Feature card gradients */
+  --feature-green: rgba(163, 208, 191, 0.1);
+  --feature-green-end: rgba(163, 208, 191, 0.03);
+  --feature-gold: rgba(253, 195, 77, 0.1);
+  --feature-gold-end: rgba(253, 195, 77, 0.03);
+  --feature-teal: rgba(140, 185, 168, 0.1);
+  --feature-teal-end: rgba(140, 185, 168, 0.03);
+
+  /* Chat empty state icon bg */
+  --chat-empty-bg-start: rgba(163, 208, 191, 0.08);
+  --chat-empty-bg-end: rgba(163, 208, 191, 0.02);
+
+  /* Disabled send button */
+  --color-disabled-bg: #2a2a2e;
+  --color-disabled-text: #5a5a5e;
+
+  /* Placeholder */
+  --color-placeholder: #555550;
+
+  /* Scrollbar */
+  --color-scrollbar: #3a3a3e;
+  --color-scrollbar-hover: #4a4a4e;
+
+  /* Parchment texture */
+  --parchment-bg: #141416;
+  --parchment-radial: rgba(30, 30, 34, 0.5);
+  --parchment-dots: #232328;
+
+  /* Waveform */
+  --color-waveform: #a3d0bf;
+
+  /* Stat shimmer */
+  --stat-shimmer: rgba(255, 255, 255, 0.02);
+
+  /* Book spine in material cards */
+  --book-spine-start: #244e41;
+  --book-spine-end: #1a3a30;
+  --book-spine-icon: #8cb9a8;
+
+  /* Prose */
+  --prose-heading: #a3d0bf;
+  --prose-text: #e5e2e1;
+  --prose-code-bg: #2a2a2e;
+  --prose-blockquote-border: #3a3a3e;
+  --prose-blockquote-text: #b0b8b4;
+
+  /* Streaming cursor */
+  --streaming-cursor: #a3d0bf;
+
+  /* Citation */
+  --citation-color: #fdc34d;
+  --citation-hover: #ffe082;
+  --citation-highlight-bg: rgba(253, 195, 77, 0.15);
+
+  /* Toast */
+  --toast-bg-start: #1e1e24;
+  --toast-bg-end: #1a1a20;
+  --toast-text: #e5e2e1;
+  --toast-border: #3a3a3e;
 }
 
 * {
@@ -21,8 +331,8 @@ html {
 }
 
 body {
-  background-color: #fcf9f8;
-  color: #1c1b1b;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
   font-family: 'Literata', Georgia, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -37,39 +347,44 @@ body {
 /* Ledger-line inputs */
 .ledger-input {
   border: none;
-  border-bottom: 1px solid #c0c8c3;
+  border-bottom: 1px solid var(--color-outline-variant);
   background: transparent;
   padding: 10px 0;
   border-radius: 0;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
+  color: var(--color-on-surface);
 }
 
 .ledger-input:focus {
   outline: none;
   box-shadow: none;
-  border-bottom: 2px solid #7b5800;
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+.ledger-input::placeholder {
+  color: var(--color-placeholder);
 }
 
 /* Citation highlight */
 .citation-highlight {
-  background: rgba(184, 134, 11, 0.15) !important;
+  background: var(--citation-highlight-bg) !important;
   transition: background 300ms;
 }
 
 /* Parchment texture for editor */
 .parchment-texture {
-  background-color: #fcf9f8;
+  background-color: var(--parchment-bg);
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(245, 239, 224, 0.5) 0%, transparent 50%),
-    radial-gradient(#dcd9d9 0.5px, transparent 0.5px);
+    radial-gradient(ellipse at 20% 50%, var(--parchment-radial) 0%, transparent 50%),
+    radial-gradient(var(--parchment-dots) 0.5px, transparent 0.5px);
   background-size: 100% 100%, 24px 24px;
 }
 
 /* Waveform bars */
 .waveform-bar {
   width: 3px;
-  background-color: #033327;
+  background-color: var(--color-waveform);
   margin: 0 1px;
   border-radius: 2px;
 }
@@ -91,11 +406,11 @@ body {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #D4C9A8;
+  background: var(--color-scrollbar);
   border-radius: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #b8a888;
+  background: var(--color-scrollbar-hover);
 }
 
 /* Active mode italic */
@@ -106,7 +421,7 @@ body {
 
 /* Gilt citation superscript */
 .gilt-citation {
-  color: #7b5800;
+  color: var(--citation-color);
   font-size: 0.75em;
   vertical-align: super;
   font-weight: 700;
@@ -115,7 +430,7 @@ body {
 }
 
 .gilt-citation:hover {
-  color: #a07200;
+  color: var(--citation-hover);
   text-decoration: underline;
 }
 
@@ -124,28 +439,28 @@ body {
 .prose-library h2,
 .prose-library h3 {
   font-family: 'Playfair Display', Georgia, serif;
-  color: #033327;
+  color: var(--prose-heading);
 }
 
 .prose-library p,
 .prose-library li {
   font-family: 'Literata', Georgia, serif;
-  color: #1c1b1b;
+  color: var(--prose-text);
   line-height: 1.7;
 }
 
 .prose-library code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875em;
-  background: #f0eded;
+  background: var(--prose-code-bg);
   padding: 0.1em 0.3em;
   border-radius: 3px;
 }
 
 .prose-library blockquote {
-  border-left: 3px solid #D4C9A8;
+  border-left: 3px solid var(--prose-blockquote-border);
   padding-left: 1rem;
-  color: #414845;
+  color: var(--prose-blockquote-text);
   font-style: italic;
 }
 
@@ -158,7 +473,7 @@ body {
 .streaming-cursor::after {
   content: '\25CB';
   animation: blink 1s step-end infinite;
-  color: #033327;
+  color: var(--streaming-cursor);
   margin-left: 2px;
 }
 
@@ -168,14 +483,14 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(92, 61, 30, 0.08), 0 2px 8px rgba(92, 61, 30, 0.04);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Glass morphism for header */
 .glass-header {
   backdrop-filter: blur(12px) saturate(150%);
   -webkit-backdrop-filter: blur(12px) saturate(150%);
-  background: rgba(252, 249, 248, 0.85);
+  background: var(--glass-bg);
 }
 
 /* Decorative divider */
@@ -183,14 +498,14 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #D4C9A8;
+  color: var(--color-aged-paper);
 }
 .ornamental-divider::before,
 .ornamental-divider::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, transparent, #D4C9A8, transparent);
+  background: linear-gradient(to right, transparent, var(--color-aged-paper), transparent);
 }
 
 /* Ink bleed animation for page transitions */
@@ -221,6 +536,14 @@ body {
   right: 0;
   width: 40%;
   height: 100%;
-  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+  background: linear-gradient(135deg, transparent 40%, var(--stat-shimmer) 50%, transparent 60%);
   pointer-events: none;
+}
+
+/* Theme transition */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }

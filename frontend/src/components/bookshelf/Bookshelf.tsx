@@ -50,23 +50,24 @@ export default function Bookshelf({ stats }: BookshelfProps) {
 
   return (
     <section className="mb-10 rounded-xl overflow-hidden" style={{
-      background: 'linear-gradient(180deg, #F9F3E3 0%, #F0E8D4 100%)',
-      border: '1px solid #C8B88A',
-      boxShadow: '0 4px 24px rgba(92, 61, 30, 0.08), 0 1px 4px rgba(92, 61, 30, 0.04)',
+      background: `linear-gradient(180deg, var(--color-parchment-start) 0%, var(--color-parchment-end) 100%)`,
+      border: '1px solid var(--color-gilt-border)',
+      boxShadow: 'var(--shadow-lg)',
     }}>
       {/* Header */}
       <div className="px-6 pt-5 pb-4 flex justify-between items-center">
         <div>
           <h3 style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
-            className="text-[18px] text-[#1A1A1A] font-semibold tracking-tight">
+            className="text-[18px] text-on-surface font-semibold tracking-tight">
             Your Library Shelf
           </h3>
-          <p className="text-[12px] text-[#7A7067] mt-0.5" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+          <p className="text-[12px] mt-0.5" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
             {monthLabel} &mdash; {studiedCount} of {totalDays} days
           </p>
         </div>
-        <div className="flex items-center gap-2 bg-[#1F4A3D] text-white px-4 py-2 rounded-lg" style={{
-          boxShadow: '0 2px 8px rgba(31, 74, 61, 0.3)',
+        <div className="flex items-center gap-2 text-white px-4 py-2 rounded-lg" style={{
+          background: `linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%)`,
+          boxShadow: 'var(--shadow-primary)',
         }}>
           <span className="text-[18px]">&#128293;</span>
           <span style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="font-bold text-[16px]">
@@ -164,19 +165,19 @@ export default function Bookshelf({ stats }: BookshelfProps) {
       </div>
 
       {/* Legend + Stats footer */}
-      <div className="px-6 pb-5 pt-3 border-t border-[#D4C9A8]">
+      <div className="px-6 pb-5 pt-3" style={{ borderTop: '1px solid var(--color-border)' }}>
         {/* Legend */}
-        <div className="flex items-center gap-5 mb-4 text-[11px]" style={{ fontFamily: 'Literata, Georgia, serif', color: '#7A7067' }}>
+        <div className="flex items-center gap-5 mb-4 text-[11px]" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-4 rounded-[1px] bg-[#2E4A3E]" />
             <span>Studied</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-4 rounded-[1px] border border-[#C8B88A]" />
+            <div className="w-3 h-4 rounded-[1px]" style={{ border: '1px solid var(--color-gilt-border)' }} />
             <span>Missed</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-4 rounded-[1px] border border-[#C8B88A] opacity-40 border-dashed" />
+            <div className="w-3 h-4 rounded-[1px] opacity-40" style={{ border: '1px dashed var(--color-gilt-border)' }} />
             <span>Upcoming</span>
           </div>
         </div>
@@ -184,20 +185,20 @@ export default function Bookshelf({ stats }: BookshelfProps) {
         {/* Stats */}
         <div className="flex gap-8">
           <div>
-            <p className="text-[11px] text-[#7A7067] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif' }}>Longest streak</p>
-            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-[#1F4A3D] font-bold">
+            <p className="text-[11px] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>Longest streak</p>
+            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-primary font-bold">
               {stats.longest_streak} days
             </p>
           </div>
           <div>
-            <p className="text-[11px] text-[#7A7067] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif' }}>Total study days</p>
-            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-[#1F4A3D] font-bold">
+            <p className="text-[11px] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>Total study days</p>
+            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-primary font-bold">
               {stats.total_study_days}
             </p>
           </div>
           <div>
-            <p className="text-[11px] text-[#7A7067] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif' }}>Study minutes</p>
-            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-[#1F4A3D] font-bold">
+            <p className="text-[11px] mb-0.5" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>Study minutes</p>
+            <p style={{ fontFamily: 'Playfair Display, Georgia, serif' }} className="text-[16px] text-primary font-bold">
               {stats.total_minutes_studied}
             </p>
           </div>

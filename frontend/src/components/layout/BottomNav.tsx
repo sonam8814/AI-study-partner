@@ -13,8 +13,8 @@ export default function BottomNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[72px] glass-header border-t border-[#D4C9A8]/60 flex justify-around items-center z-50 px-2"
-      style={{ boxShadow: '0 -2px 12px rgba(92, 61, 30, 0.04)' }}>
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 h-[72px] glass-header flex justify-around items-center z-50 px-2"
+      style={{ borderTop: '1px solid var(--color-border-light)', boxShadow: 'var(--shadow-bottom-nav)' }}>
       {NAV_ITEMS.map((item) => {
         const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
         return (

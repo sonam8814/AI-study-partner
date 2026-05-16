@@ -56,52 +56,43 @@ export default function WeakSpotsPage() {
       {/* Header */}
       <div className="flex items-center gap-3 mb-2">
         <div className="w-10 h-10 rounded-lg flex items-center justify-center"
-          style={{ background: 'linear-gradient(135deg, #FFF5F5 0%, #FFEBEE 100%)', border: '1px solid #FFCDD2' }}>
-          <span className="material-symbols-outlined text-[#C62828] text-[20px]">warning</span>
+          style={{ background: `linear-gradient(135deg, var(--color-error-bg-start) 0%, var(--color-error-badge-bg) 100%)`, border: '1px solid var(--color-error-border)' }}>
+          <span className="material-symbols-outlined text-[20px]" style={{ color: 'var(--color-error)' }}>warning</span>
         </div>
         <h1 className="text-[28px] font-bold text-primary"
           style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
           Weak Spots
         </h1>
       </div>
-      <p className="text-[#7A7067] italic mb-8" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+      <p className="italic mb-8" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
         Topics that need extra attention based on your study sessions.
       </p>
 
       {/* Filter toggle */}
       <div className="flex justify-center mb-10">
         <div className="flex p-1 rounded-full gap-0.5" style={{
-          background: '#F0E8D4',
-          border: '1px solid #D4C9A8',
+          background: 'var(--color-parchment-end)',
+          border: '1px solid var(--color-border)',
         }}>
-          <button
-            onClick={() => setFilter('unresolved')}
-            className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
-              filter === 'unresolved'
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-[#7A7067] hover:bg-[#E8DFC8]'
-            }`}
-            style={{
-              fontFamily: 'Literata, Georgia, serif',
-              ...(filter === 'unresolved' ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}),
-            }}
-          >
-            Unresolved
-          </button>
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
-              filter === 'all'
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-[#7A7067] hover:bg-[#E8DFC8]'
-            }`}
-            style={{
-              fontFamily: 'Literata, Georgia, serif',
-              ...(filter === 'all' ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}),
-            }}
-          >
-            All
-          </button>
+          {(['unresolved', 'all'] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-6 py-2.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${
+                filter === f ? 'text-white shadow-sm' : ''
+              }`}
+              style={{
+                fontFamily: 'Literata, Georgia, serif',
+                ...(filter === f
+                  ? { background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`, boxShadow: 'var(--shadow-primary)', color: 'white' }
+                  : { color: 'var(--color-text-muted)' }),
+              }}
+              onMouseEnter={(e) => { if (filter !== f) { e.currentTarget.style.background = 'var(--color-hover-bg)' } }}
+              onMouseLeave={(e) => { if (filter !== f) { e.currentTarget.style.background = '' } }}
+            >
+              {f === 'unresolved' ? 'Unresolved' : 'All'}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -115,7 +106,7 @@ export default function WeakSpotsPage() {
           {spots.length > 0 && (
             <section className="space-y-6 mb-12">
               <div className="flex items-center gap-2 mb-4">
-                <span className="material-symbols-outlined text-[#C62828]">priority_high</span>
+                <span className="material-symbols-outlined" style={{ color: 'var(--color-error)' }}>priority_high</span>
                 <h2 className="text-[20px] text-primary font-semibold"
                   style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
                   Priority Focus
@@ -131,12 +122,12 @@ export default function WeakSpotsPage() {
 
           {spots.length === 0 && (
             <div className="text-center py-16 rounded-xl" style={{
-              background: 'linear-gradient(180deg, #F5FFF5 0%, #F0F9F0 100%)',
-              border: '1px solid #C8E6C9',
+              background: 'linear-gradient(180deg, rgba(46,125,50,0.05) 0%, rgba(46,125,50,0.02) 100%)',
+              border: '1px solid rgba(46,125,50,0.2)',
             }}>
-              <span className="material-symbols-outlined text-[#2E7D32] text-[48px] mb-3 block opacity-50"
-                style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-              <p className="text-[#7A7067] italic" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+              <span className="material-symbols-outlined text-[48px] mb-3 block opacity-50"
+                style={{ fontVariationSettings: "'FILL' 1", color: '#2E7D32' }}>verified</span>
+              <p className="italic" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
                 No unresolved weak spots - excellent work!
               </p>
             </div>
@@ -144,11 +135,11 @@ export default function WeakSpotsPage() {
 
           {/* Resolved section */}
           {filter === 'all' && resolved.length > 0 && (
-            <section className="mt-16 pt-8 border-t border-[#D4C9A8] opacity-70">
+            <section className="mt-16 pt-8 opacity-70" style={{ borderTop: '1px solid var(--color-border)' }}>
               <div className="flex items-center gap-2 mb-6">
-                <span className="material-symbols-outlined text-[#A09888]">task_alt</span>
-                <h2 className="text-[18px] text-[#7A7067] font-semibold"
-                  style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                <span className="material-symbols-outlined" style={{ color: 'var(--color-text-faint)' }}>task_alt</span>
+                <h2 className="text-[18px] font-semibold"
+                  style={{ fontFamily: 'Playfair Display, Georgia, serif', color: 'var(--color-text-muted)' }}>
                   Recently Resolved
                 </h2>
               </div>
@@ -156,8 +147,8 @@ export default function WeakSpotsPage() {
                 {resolved.slice(0, 5).map((spot) => (
                   <div key={spot.id} className="p-4 rounded-xl flex items-center justify-between"
                     style={{
-                      background: 'linear-gradient(180deg, #FAFAFA 0%, #F5F5F5 100%)',
-                      border: '1px solid #E0E0E0',
+                      background: `linear-gradient(180deg, var(--color-surface-container) 0%, var(--color-surface-container-high) 100%)`,
+                      border: '1px solid var(--color-border)',
                     }}>
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-primary text-[20px]"
@@ -165,8 +156,8 @@ export default function WeakSpotsPage() {
                         verified
                       </span>
                       <div>
-                        <h3 className="text-[14px] font-bold text-[#7A7067]">{spot.topic}</h3>
-                        <p className="text-[11px] text-[#A09888]">Resolved</p>
+                        <h3 className="text-[14px] font-bold" style={{ color: 'var(--color-text-muted)' }}>{spot.topic}</h3>
+                        <p className="text-[11px]" style={{ color: 'var(--color-text-faint)' }}>Resolved</p>
                       </div>
                     </div>
                   </div>

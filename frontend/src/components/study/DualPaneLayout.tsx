@@ -15,16 +15,22 @@ export default function DualPaneLayout({ material }: DualPaneLayoutProps) {
   return (
     <>
       {/* Mobile tab switcher */}
-      <nav className="md:hidden flex border-b border-[#D4C9A8]/60 sticky top-14 z-40"
-        style={{ background: 'linear-gradient(180deg, #F9F5EC 0%, #F3EDE0 100%)' }}>
+      <nav className="md:hidden flex sticky top-14 z-40"
+        style={{
+          borderBottom: '1px solid var(--color-border-light)',
+          background: `linear-gradient(180deg, var(--color-input-area-start) 0%, var(--color-input-area-end) 100%)`,
+        }}>
         <button
           onClick={() => setActiveTab('chat')}
           className={`flex-1 py-3 text-[13px] font-semibold transition-all duration-200 ${
             activeTab === 'chat'
               ? 'border-b-2 border-primary text-primary'
-              : 'text-[#7A7067]'
+              : ''
           }`}
-          style={{ fontFamily: 'Literata, Georgia, serif' }}
+          style={{
+            fontFamily: 'Literata, Georgia, serif',
+            ...(activeTab !== 'chat' ? { color: 'var(--color-text-muted)' } : {}),
+          }}
         >
           Chat
         </button>
@@ -33,9 +39,12 @@ export default function DualPaneLayout({ material }: DualPaneLayoutProps) {
           className={`flex-1 py-3 text-[13px] font-semibold transition-all duration-200 ${
             activeTab === 'notes'
               ? 'border-b-2 border-primary text-primary'
-              : 'text-[#7A7067]'
+              : ''
           }`}
-          style={{ fontFamily: 'Literata, Georgia, serif' }}
+          style={{
+            fontFamily: 'Literata, Georgia, serif',
+            ...(activeTab !== 'notes' ? { color: 'var(--color-text-muted)' } : {}),
+          }}
         >
           Notes
         </button>
@@ -49,7 +58,8 @@ export default function DualPaneLayout({ material }: DualPaneLayoutProps) {
         </div>
 
         {/* Notes pane */}
-        <div className={`${activeTab === 'notes' ? 'flex' : 'hidden'} md:flex w-full md:w-[400px] border-l border-[#D4C9A8]/60`}>
+        <div className={`${activeTab === 'notes' ? 'flex' : 'hidden'} md:flex w-full md:w-[400px]`}
+          style={{ borderLeft: '1px solid var(--color-border-light)' }}>
           <NotesPanel ref={notesPanelRef} material={material} />
         </div>
       </main>

@@ -81,7 +81,10 @@ export default function MaterialEditorPage({ params }: { params: { id: string } 
             type="text"
             value={title}
             onChange={(e) => { setTitle(e.target.value); setIsDirty(true) }}
-            className="bg-transparent border-none p-0 focus:ring-0 font-headline-md text-headline-md font-bold text-primary w-full outline-none border-b border-on-surface focus:border-secondary transition-colors pb-1"
+            className="bg-transparent border-none p-0 focus:ring-0 font-headline-md text-headline-md font-bold text-primary w-full outline-none pb-1"
+            style={{ borderBottom: '1px solid var(--color-border)' }}
+            onFocus={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-secondary)'}
+            onBlur={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-border)'}
           />
         </div>
         <div className="flex items-center gap-3">
@@ -90,7 +93,7 @@ export default function MaterialEditorPage({ params }: { params: { id: string } 
             disabled={saving || !isDirty}
             className="hidden md:flex px-4 py-2 border border-aged-paper text-secondary font-label-sm text-label-sm rounded transition-colors hover:bg-surface-container disabled:opacity-40"
           >
-            {saving ? 'Saving…' : isDirty ? 'Save' : 'Saved'}
+            {saving ? 'Saving...' : isDirty ? 'Save' : 'Saved'}
           </button>
           <Link
             href={`/materials/${params.id}/study`}
@@ -113,7 +116,7 @@ export default function MaterialEditorPage({ params }: { params: { id: string } 
           <span className="px-4 py-1.5 font-label-sm text-label-sm bg-surface-container-high border-b-2 border-secondary text-primary">Write</span>
         </div>
         <span className="hidden sm:block font-label-sm text-label-sm text-on-surface-variant italic">
-          {saving ? 'Saving…' : isDirty ? 'Unsaved changes' : 'All changes saved'}
+          {saving ? 'Saving...' : isDirty ? 'Unsaved changes' : 'All changes saved'}
         </span>
       </div>
 

@@ -36,8 +36,8 @@ export default function ChatMessage({ message, onScrollTo }: ChatMessageProps) {
       <div className="flex justify-end">
         <div className="max-w-[80%] px-5 py-3.5 rounded-2xl rounded-tr-sm"
           style={{
-            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-            boxShadow: '0 2px 8px rgba(3, 51, 39, 0.15)',
+            background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+            boxShadow: 'var(--shadow-primary)',
           }}>
           <p className="font-body-md text-body-md text-white/95">{message.content}</p>
         </div>
@@ -51,7 +51,7 @@ export default function ChatMessage({ message, onScrollTo }: ChatMessageProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="pl-5 border-l-[3px] rounded-sm" style={{ borderColor: '#C8A472' }}>
+      <div className="pl-5 border-l-[3px] rounded-sm" style={{ borderColor: 'var(--color-gilt)' }}>
         <div className="font-body-lg text-body-lg text-on-surface leading-relaxed prose-library">
           {hasCitations ? (
             <div>

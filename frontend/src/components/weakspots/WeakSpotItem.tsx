@@ -17,9 +17,9 @@ export default function WeakSpotItem({ spot, onResolve }: WeakSpotItemProps) {
 
   return (
     <div className="card-hover rounded-xl p-6" style={{
-      background: 'linear-gradient(180deg, #FDFBF7 0%, #F9F5EC 100%)',
-      border: '1px solid #D4C9A8',
-      boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)',
+      background: `linear-gradient(180deg, var(--color-surface-elevated) 0%, var(--color-surface-elevated-end) 100%)`,
+      border: '1px solid var(--color-border)',
+      boxShadow: 'var(--shadow-sm)',
     }}>
       <div className="flex justify-between items-start mb-4">
         <div className="flex items-center gap-2.5">
@@ -30,19 +30,19 @@ export default function WeakSpotItem({ spot, onResolve }: WeakSpotItemProps) {
             {spot.topic}
           </span>
         </div>
-        <span className="text-[#C62828] text-[11px] font-bold bg-[#FFEBEE] px-2.5 py-1 rounded-full"
-          style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+        <span className="text-[11px] font-bold px-2.5 py-1 rounded-full"
+          style={{ fontFamily: 'JetBrains Mono, monospace', color: 'var(--color-error)', background: 'var(--color-error-badge-bg)' }}>
           {spot.miss_count} MISSES
         </span>
       </div>
 
       {spot.description && (
-        <p className="text-[#7A7067] text-body-md mb-4" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+        <p className="text-body-md mb-4" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
           {spot.description}
         </p>
       )}
 
-      <p className="text-[#A09888] text-[12px] italic mb-4" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+      <p className="text-[12px] italic mb-4" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-faint)' }}>
         Last missed {formatRelative(spot.last_missed_at)}
       </p>
 
@@ -53,8 +53,8 @@ export default function WeakSpotItem({ spot, onResolve }: WeakSpotItemProps) {
             className="flex-1 text-white py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 text-[13px] font-semibold transition-all hover:opacity-90"
             style={{
               fontFamily: 'Literata, Georgia, serif',
-              background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-              boxShadow: '0 2px 6px rgba(3, 51, 39, 0.15)',
+              background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+              boxShadow: 'var(--shadow-primary)',
             }}
           >
             Practice
@@ -63,7 +63,10 @@ export default function WeakSpotItem({ spot, onResolve }: WeakSpotItemProps) {
         )}
         <button
           onClick={() => onResolve(spot.id)}
-          className="flex items-center justify-center border border-[#D4C9A8] text-[#7A7067] p-2.5 rounded-lg hover:bg-[#EDE7D9] hover:text-primary transition-all duration-200"
+          className="flex items-center justify-center p-2.5 rounded-lg transition-all duration-200"
+          style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-hover-bg)'; e.currentTarget.style.color = 'var(--color-primary)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--color-text-muted)' }}
           title="Mark as resolved"
           aria-label="Mark as resolved"
         >

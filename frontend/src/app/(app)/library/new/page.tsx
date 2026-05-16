@@ -44,7 +44,9 @@ export default function NewMaterialPage() {
         <div className="flex items-center gap-4 flex-1">
           <button
             onClick={() => router.back()}
-            className="text-primary hover:bg-[#EDE7D9] p-2 rounded-lg transition-all duration-200"
+            className="text-primary p-2 rounded-lg transition-all duration-200"
+            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-hover-bg)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = ''}
           >
             <span className="material-symbols-outlined">arrow_back</span>
           </button>
@@ -54,8 +56,13 @@ export default function NewMaterialPage() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title your manuscript..."
             maxLength={200}
-            className="bg-transparent border-none p-0 focus:ring-0 text-[24px] font-bold text-primary w-full outline-none border-b border-[#D4C9A8] focus:border-secondary transition-colors pb-1 placeholder:text-[#C0B8A8]"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="bg-transparent border-none p-0 focus:ring-0 text-[24px] font-bold text-primary w-full outline-none pb-1"
+            style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              borderBottom: '1px solid var(--color-border)',
+            }}
+            onFocus={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-secondary)'}
+            onBlur={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-border)'}
           />
         </div>
         <button
@@ -64,8 +71,8 @@ export default function NewMaterialPage() {
           className="flex items-center gap-2 px-5 py-2.5 text-white text-[13px] font-semibold rounded-lg transition-all disabled:opacity-50 hover:opacity-90"
           style={{
             fontFamily: 'Literata, Georgia, serif',
-            background: 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)',
-            boxShadow: '0 2px 8px rgba(3, 51, 39, 0.2)',
+            background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`,
+            boxShadow: 'var(--shadow-primary)',
           }}
         >
           {saving ? <Spinner className="w-4 h-4" /> : null}
@@ -75,8 +82,8 @@ export default function NewMaterialPage() {
 
       {/* Tags */}
       <div className="mb-6">
-        <label className="text-[12px] text-[#7A7067] mb-2 block font-semibold tracking-wide"
-          style={{ fontFamily: 'Literata, Georgia, serif' }}>
+        <label className="text-[12px] mb-2 block font-semibold tracking-wide"
+          style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
           Tags
         </label>
         <TagInput tags={tags} onChange={setTags} />
@@ -84,8 +91,8 @@ export default function NewMaterialPage() {
 
       {/* Editor toolbar */}
       <div className="flex items-center justify-between rounded-t-xl p-3" style={{
-        background: 'linear-gradient(180deg, #F0E8D4 0%, #EDE7D9 100%)',
-        border: '1px solid #D4C9A8',
+        background: `linear-gradient(180deg, var(--color-parchment-end) 0%, var(--color-hover-bg) 100%)`,
+        border: '1px solid var(--color-border)',
         borderBottom: 'none',
       }}>
         <div className="flex items-center gap-1">
@@ -94,14 +101,14 @@ export default function NewMaterialPage() {
             Write
           </span>
         </div>
-        <span className="hidden sm:block text-[12px] text-[#7A7067] italic"
-          style={{ fontFamily: 'Literata, Georgia, serif' }}>
+        <span className="hidden sm:block text-[12px] italic"
+          style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
           Markdown supported
         </span>
       </div>
 
       {/* Editor */}
-      <div className="flex-1" style={{ border: '1px solid #D4C9A8', borderTop: 'none' }}>
+      <div className="flex-1" style={{ border: '1px solid var(--color-border)', borderTop: 'none' }}>
         <MarkdownEditor value={content} onChange={setContent} height={600} />
       </div>
     </div>

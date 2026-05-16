@@ -165,10 +165,11 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
   }, [inputText])
 
   return (
-    <section className="flex-1 flex flex-col parchment-texture border-r border-[#D4C9A8]/60 relative overflow-hidden">
+    <section className="flex-1 flex flex-col parchment-texture relative overflow-hidden"
+      style={{ borderRight: '1px solid var(--color-border-light)' }}>
       {/* Header row: mode switcher + always listening indicator */}
-      <div className="px-4 py-3 border-b border-[#D4C9A8]/60 glass-header flex items-center justify-between"
-        style={{ boxShadow: '0 1px 4px rgba(92, 61, 30, 0.03)' }}>
+      <div className="px-4 py-3 glass-header flex items-center justify-between"
+        style={{ borderBottom: '1px solid var(--color-border-light)', boxShadow: 'var(--shadow-sm)' }}>
         <ModeSwitcher />
         {alwaysOn && (
           <AlwaysListeningBanner onDisable={handleDisableAlwaysOn} />
@@ -180,10 +181,10 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
         {messages.length === 0 && !isStreaming && (
           <div className="flex flex-col items-center justify-center h-full text-center py-16">
             <div className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
-              style={{ background: 'linear-gradient(135deg, rgba(3,51,39,0.06) 0%, rgba(3,51,39,0.02) 100%)' }}>
+              style={{ background: `linear-gradient(135deg, var(--chat-empty-bg-start) 0%, var(--chat-empty-bg-end) 100%)` }}>
               <span className="material-symbols-outlined text-primary text-[36px] opacity-50">auto_stories</span>
             </div>
-            <p className="font-body-lg text-[#7A7067] italic max-w-sm" style={{ fontFamily: 'Literata, Georgia, serif' }}>
+            <p className="font-body-lg italic max-w-sm" style={{ fontFamily: 'Literata, Georgia, serif', color: 'var(--color-text-muted)' }}>
               Ask a question, request a quiz, or say &ldquo;start Feynman mode&rdquo; to begin.
             </p>
           </div>
@@ -228,13 +229,18 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
       )}
 
       {/* Input */}
-      <div className="p-4 md:p-6 border-t border-[#D4C9A8]/60" style={{
-        background: 'linear-gradient(180deg, #F9F5EC 0%, #F3EDE0 100%)',
+      <div className="p-4 md:p-6" style={{
+        borderTop: '1px solid var(--color-border-light)',
+        background: `linear-gradient(180deg, var(--color-input-area-start) 0%, var(--color-input-area-end) 100%)`,
       }}>
         <div className="max-w-content mx-auto">
           <form onSubmit={handleSubmit}>
-            <div className="flex items-end gap-3 bg-white border border-[#D4C9A8] rounded-xl p-3 focus-within:border-secondary focus-within:shadow-sm transition-all duration-200"
-              style={{ boxShadow: '0 1px 4px rgba(92, 61, 30, 0.04)' }}>
+            <div className="flex items-end gap-3 rounded-xl p-3 focus-within:shadow-sm transition-all duration-200"
+              style={{
+                background: 'var(--color-input-bg)',
+                border: '1px solid var(--color-border)',
+                boxShadow: 'var(--shadow-sm)',
+              }}>
               <textarea
                 ref={textareaRef}
                 value={inputText}
@@ -242,10 +248,11 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
                 onKeyDown={handleKeyDown}
                 placeholder="Ask a question or share your thinking..."
                 rows={1}
-                className="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md pt-1 max-h-32 outline-none placeholder:text-[#C0B8A8]"
+                className="flex-1 bg-transparent border-none focus:ring-0 resize-none font-body-md text-body-md pt-1 max-h-32 outline-none"
+                style={{ color: 'var(--color-on-surface)' }}
                 disabled={isStreaming}
               />
-              <div className="flex items-center gap-1.5 border-l border-[#E8D5B0] pl-2">
+              <div className="flex items-center gap-1.5 pl-2" style={{ borderLeft: '1px solid var(--color-weakspot-border)' }}>
                 <VoiceToggle onTranscript={handleVoiceTranscript} />
                 {isSupported && (
                   <button
@@ -256,8 +263,11 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
                     className={`p-2 rounded-full transition-all duration-200 ${
                       alwaysOn
                         ? 'bg-primary text-white animate-pulse'
-                        : 'text-[#7A7067] hover:text-primary hover:bg-[#EDE7D9]'
+                        : ''
                     }`}
+                    style={!alwaysOn ? { color: 'var(--color-text-muted)' } : {}}
+                    onMouseEnter={(e) => { if (!alwaysOn) { e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.background = 'var(--color-hover-bg)' } }}
+                    onMouseLeave={(e) => { if (!alwaysOn) { e.currentTarget.style.color = 'var(--color-text-muted)'; e.currentTarget.style.background = '' } }}
                   >
                     <span className="material-symbols-outlined text-[20px]">
                       {alwaysOn ? 'hearing' : 'hearing_disabled'}
@@ -270,10 +280,10 @@ export default function ChatPanel({ materialId, notesPanelRef }: ChatPanelProps)
                   className="rounded-full p-2.5 flex items-center justify-center transition-all duration-200 disabled:opacity-30 shrink-0"
                   style={{
                     background: inputText.trim() && !isStreaming
-                      ? 'linear-gradient(135deg, #033327 0%, #1F4A3D 100%)'
-                      : '#E5E2E1',
-                    color: inputText.trim() && !isStreaming ? 'white' : '#A09888',
-                    boxShadow: inputText.trim() && !isStreaming ? '0 2px 6px rgba(3,51,39,0.2)' : 'none',
+                      ? `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`
+                      : 'var(--color-disabled-bg)',
+                    color: inputText.trim() && !isStreaming ? 'white' : 'var(--color-disabled-text)',
+                    boxShadow: inputText.trim() && !isStreaming ? 'var(--shadow-primary)' : 'none',
                   }}
                   aria-label="Send message"
                 >

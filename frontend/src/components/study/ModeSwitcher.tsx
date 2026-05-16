@@ -16,8 +16,8 @@ export default function ModeSwitcher() {
 
   return (
     <div className="flex rounded-full p-1 gap-0.5" style={{
-      background: '#F0E8D4',
-      border: '1px solid #D4C9A8',
+      background: 'var(--color-parchment-end)',
+      border: '1px solid var(--color-border)',
     }}>
       {MODES.map((m) => (
         <button
@@ -26,10 +26,15 @@ export default function ModeSwitcher() {
           className={cn(
             'px-3 py-1.5 rounded-full text-[13px] font-semibold transition-all duration-200 flex items-center gap-1.5',
             mode === m
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-[#7A7067] hover:bg-[#E8DFC8] hover:text-primary'
+              ? 'text-white shadow-sm'
+              : ''
           )}
-          style={mode === m ? { boxShadow: '0 1px 4px rgba(3,51,39,0.2)' } : {}}
+          style={mode === m
+            ? { background: `linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%)`, boxShadow: 'var(--shadow-primary)', color: 'white' }
+            : { color: 'var(--color-text-muted)' }
+          }
+          onMouseEnter={(e) => { if (mode !== m) { e.currentTarget.style.background = 'var(--color-hover-bg)'; e.currentTarget.style.color = 'var(--color-primary)' } }}
+          onMouseLeave={(e) => { if (mode !== m) { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--color-text-muted)' } }}
           title={MODE_LABELS[m]}
         >
           <span className="material-symbols-outlined text-[16px]"

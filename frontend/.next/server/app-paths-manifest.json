@@ -1,9 +1,14 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/auth/callback/route": "app/api/auth/callback/route.js",
+  "/page": "app/page.js",
   "/api/proxy/[...path]/route": "app/api/proxy/[...path]/route.js",
   "/(app)/library/page": "app/(app)/library/page.js",
   "/(app)/weakspots/page": "app/(app)/weakspots/page.js",
-  "/(app)/library/new/page": "app/(app)/library/new/page.js",
-  "/(app)/materials/[id]/study/page": "app/(app)/materials/[id]/study/page.js",
   "/(app)/dashboard/page": "app/(app)/dashboard/page.js",
+  "/(app)/library/new/page": "app/(app)/library/new/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/(app)/materials/[id]/study/page": "app/(app)/materials/[id]/study/page.js",
   "/(app)/materials/[id]/page": "app/(app)/materials/[id]/page.js"
 }
