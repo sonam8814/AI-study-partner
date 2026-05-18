@@ -89,14 +89,6 @@ ai-study-partner/
 └── LICENSE            # MIT
 ```
 
-## Deployment
-
-- **Frontend**: Deploy `frontend/` to Vercel
-- **Backend**: Deploy `backend/` to Render using the included Dockerfile
-- **Database**: Supabase cloud (free tier)
-
-See `PRD.md` section 23 for detailed deployment instructions.
-
 ## License
 
 MIT
